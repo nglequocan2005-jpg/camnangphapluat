@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cẩm Nang Nhận Diện & Phòng Chống Lừa Đảo Trực Tuyến</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* <!-- Chosen Palette: Trust Blue & Alert Red --> */
+        :root {
+            --bg-color: #f8fafc;
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --alert-red: #ef4444;
+            --text-main: #1e293b;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 350px; }
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        .scam-card {
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .scam-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--secondary-blue);
+        }
+        .scam-card.active {
+            border-left: 4px solid var(--primary-blue);
+            background-color: #eff6ff;
+        }
+        
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="antialiased flex flex-col min-h-screen">
+
+    <!-- Application Structure Plan:
+    Cấu trúc Dashboard Interactive (SPA) để dễ dàng tra cứu 24 mục mà không phải cuộn trang liên tục.
+    - Header/Hero: Khẳng định tính chính thống và tóm tắt mục đích.
+    - Main App: Split-view (Trái: Danh sách + Tìm kiếm | Phải: Chi tiết hình ảnh + nội dung).
+    - Footer/Help: Thông tin liên hệ báo cáo khẩn cấp.
+    -->
+
+    <header class="bg-blue-900 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="text-center md:text-left mb-2 md:mb-0">
+                <p class="text-xs text-blue-200 uppercase tracking-wider font-semibold">Bộ Thông Tin và Truyền Thông</p>
+                <p class="text-sm text-blue-100 font-medium">Cục An Toàn Thông Tin</p>
+            </div>
+            <h1 class="text-xl md:text-2xl font-bold text-center">CẨM NANG PHÒNG CHỐNG LỪA ĐẢO TRỰC TUYẾN</h1>
+            <div class="mt-2 md:mt-0 flex items-center space-x-2 bg-red-600 px-3 py-1 rounded-full text-sm font-bold animate-pulse cursor-pointer hover:bg-red-700 transition" onclick="document.getElementById('bao-cao').scrollIntoView();">
+                <span>☎</span>
+                <span>Báo cáo lừa đảo</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+        <section class="mb-8 text-center max-w-3xl mx-auto">
+            <p class="text-lg text-gray-700">
+                Nhận diện và phòng tránh <strong>24 hình thức lừa đảo trực tuyến phổ biến nhất</strong> tại Việt Nam. Chọn một chủ đề bên dưới để xem hướng dẫn chi tiết.
+            </p>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden mb-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 h-auto lg:h-[700px]">
+                
+                <!-- Left Sidebar -->
+                <div class="lg:col-span-4 border-r border-gray-200 flex flex-col bg-gray-50 h-[450px] lg:h-full overflow-hidden">
+                    <div class="p-4 border-b border-gray-200 bg-white shadow-sm z-10 shrink-0">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">🔍</span>
+                            <input type="text" id="searchInput" placeholder="Tìm kiếm hình thức lừa đảo..." class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                        </div>
+                    </div>
+                    <div class="overflow-y-auto flex-1 custom-scrollbar p-3" id="scamList">
+                        <!-- Danh sách JS -->
+                    </div>
+                </div>
+
+                <!-- Right Content -->
+                <div class="lg:col-span-8 p-5 lg:p-8 overflow-y-auto bg-white flex flex-col custom-scrollbar h-[500px] lg:h-full" id="scamDetailContainer">
+                    <div id="defaultState" class="flex flex-col items-center justify-center h-full text-center text-gray-400">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3233/3233483.png" alt="Shield" class="w-24 h-24 mb-4 opacity-50 grayscale">
+                        <h3 class="text-xl font-semibold text-gray-600">Chọn một hình thức lừa đảo</h3>
+                        <p class="mt-2 text-sm max-w-sm">Tra cứu dấu hiệu nhận biết và cách phòng tránh các thủ đoạn lừa đảo tinh vi trên không gian mạng.</p>
+                    </div>
+
+                    <div id="detailState" class="hidden flex flex-col">
+                        <div class="flex items-center space-x-3 mb-6 pb-4 border-b border-gray-100">
+                            <span id="detailIcon" class="text-4xl"></span>
+                            <h2 id="detailTitle" class="text-2xl font-bold text-blue-900 leading-tight"></h2>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow">
+                            <!-- Dấu hiệu -->
+                            <div class="bg-red-50 p-6 rounded-xl border border-red-100 shadow-sm h-fit">
+                                <h3 class="flex items-center text-red-700 font-bold text-lg mb-4 border-b border-red-200 pb-2">
+                                    <span class="mr-2">⚠️</span> DẤU HIỆU NHẬN BIẾT
+                                </h3>
+                                <ul id="detailSigns" class="space-y-3 text-gray-700 list-disc pl-5 marker:text-red-500 text-sm leading-relaxed">
+                                </ul>
+                            </div>
+
+                            <!-- Phòng tránh -->
+                            <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 shadow-sm h-fit">
+                                <h3 class="flex items-center text-blue-700 font-bold text-lg mb-4 border-b border-blue-200 pb-2">
+                                    <span class="mr-2">🛡️</span> CÁCH PHÒNG TRÁNH
+                                </h3>
+                                <ul id="detailPrevention" class="space-y-3 text-gray-700 list-disc pl-5 marker:text-blue-500 text-sm leading-relaxed">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chart Section -->
+        <section class="mb-12">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-blue-900">Nhóm Đối Tượng Dễ Bị Lừa Đảo Nhất</h2>
+                <p class="text-gray-600 mt-2 text-sm">Thống kê minh họa dựa trên phân tích chung về tình hình tội phạm mạng.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                <div class="chart-container">
+                    <canvas id="targetAudienceChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Help Section -->
+        <section id="bao-cao" class="bg-slate-800 text-white rounded-xl p-8 shadow-lg">
+            <h2 class="text-2xl font-bold mb-6 flex items-center border-b border-slate-600 pb-4">
+                <span class="mr-3 text-red-500">🚨</span> BẠN CẦN LÀM GÌ KHI BỊ LỪA ĐẢO?
+            </h2>
+            <p class="mb-6 text-slate-300">Nếu bạn nghi ngờ mình là nạn nhân, hãy lập tức liên hệ các cơ quan sau để được hỗ trợ:</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-slate-700 p-5 rounded-lg border border-slate-600">
+                    <h3 class="font-bold text-blue-300 mb-2">Cục An Toàn Thông Tin</h3>
+                    <p class="text-sm text-slate-300 flex items-center mb-1"><span>📞</span> <span class="ml-2">024 3209 6789</span></p>
+                    <p class="text-sm text-slate-300 flex items-center"><span>✉️</span> <span class="ml-2">ais@mic.gov.vn</span></p>
+                </div>
+                
+                <div class="bg-slate-700 p-5 rounded-lg border border-slate-600">
+                    <h3 class="font-bold text-blue-300 mb-2">Cơ quan Công An</h3>
+                    <p class="text-sm text-slate-300 mb-1">Cục An ninh mạng (A05) - Bộ Công An.</p>
+                    <p class="text-sm text-slate-300">Phòng An ninh mạng địa phương (PA05).</p>
+                </div>
+
+                <div class="bg-slate-700 p-5 rounded-lg border border-slate-600">
+                    <h3 class="font-bold text-blue-300 mb-2">Hiệp hội ATTT Việt Nam (VNISA)</h3>
+                    <p class="text-sm text-slate-300 flex items-center mb-1"><span>📞</span> <span class="ml-2">024 62901028</span></p>
+                    <p class="text-sm text-slate-300 flex items-center"><span>✉️</span> <span class="ml-2">info@vnisa.org.vn</span></p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-100 border-t border-gray-200 py-6 text-center text-gray-500 text-sm mt-auto">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>Trang web Cẩm nang tương tác - Dựa trên tài liệu của Cục An toàn thông tin (06/2023).</p>
+            <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const scamData = [
+            {
+                id: 1, title: 'Lừa đảo "combo du lịch giá rẻ"', icon: '✈️',
+                signs: [
+                    'Quảng cáo gói du lịch (vé máy bay, khách sạn) với giá rẻ bất thường (rẻ hơn 30-50% thị trường).',
+                    'Yêu cầu chuyển khoản đặt cọc trước (thường là 50-100%) vào tài khoản cá nhân, không phải tài khoản doanh nghiệp.',
+                    'Kẻ gian thường viện lý do "sắp hết hạn", "suất nội bộ" để hối thúc nạn nhân chuyển tiền nhanh.',
+                    'Sau khi nhận tiền, đối tượng chặn liên lạc hoặc cung cấp mã vé giả mạo.'
+                ],
+                prevention: [
+                    'Cảnh giác với các lời mời chào giá quá rẻ trên mạng xã hội.',
+                    'Chỉ giao dịch mua vé, đặt phòng qua công ty du lịch, ứng dụng uy tín hoặc website chính thức.',
+                    'Tuyệt đối không chuyển khoản cho tài khoản cá nhân không rõ lai lịch.',
+                    'Xác minh lại mã đặt chỗ trực tiếp với hãng hàng không/khách sạn trước khi thanh toán.'
+                ]
+            },
+            {
+                id: 2, title: 'Lừa đảo cuộc gọi video Deepfake', icon: '🎭',
+                signs: [
+                    'Nhận được tin nhắn vay mượn tiền từ tài khoản mạng xã hội của người thân/bạn bè.',
+                    'Khi gọi video call để xác nhận, hình ảnh có vẻ giống nhưng thường mờ nhòe, giật lag, thời gian gọi rất ngắn.',
+                    'Âm thanh không khớp khẩu hình miệng, hoặc lấy lý do mất sóng, ồn ào.',
+                    'Yêu cầu chuyển tiền vào một số tài khoản lạ (mang tên gần giống hoặc báo tài khoản chính lỗi).'
+                ],
+                prevention: [
+                    'Bình tĩnh khi nhận được yêu cầu mượn tiền gấp qua mạng xã hội.',
+                    'Gọi điện thoại viễn thông thông thường trực tiếp cho người đó để xác nhận.',
+                    'Nếu gọi video, yêu cầu họ làm các hành động ngẫu nhiên (đưa tay lên mặt, quay trái phải).',
+                    'Tuyệt đối không chuyển tiền vào tài khoản người lạ dù tên có trùng khớp.'
+                ]
+            },
+            {
+                id: 3, title: 'Lừa đảo "khóa SIM chưa chuẩn hóa"', icon: '📱',
+                signs: [
+                    'Nhận cuộc gọi tự xưng là nhân viên nhà mạng (Viettel, VNPT, MobiFone) hoặc Cục Viễn thông.',
+                    'Thông báo số điện thoại sẽ bị khóa sau 1-2 giờ nữa do "chưa chuẩn hóa thông tin", "sai CCCD".',
+                    'Yêu cầu cung cấp thông tin cá nhân hoặc truy cập đường link lạ để tự cập nhật.',
+                    'Yêu cầu cung cấp mã OTP gửi về máy.'
+                ],
+                prevention: [
+                    'Các nhà mạng không bao giờ yêu cầu khách hàng cung cấp mã OTP hay thông tin tài khoản ngân hàng.',
+                    'Khi có cuộc gọi đe dọa khóa máy, hãy tắt máy và tự gọi tổng đài CSKH chính thức của nhà mạng.',
+                    'Không nhấn vào đường link lạ gửi qua SMS/Zalo.',
+                    'Kiểm tra thông tin thuê bao bằng cách nhắn tin TTTB gửi 1414.'
+                ]
+            },
+            {
+                id: 4, title: 'Giả mạo biên lai chuyển tiền', icon: '🧾',
+                signs: [
+                    'Kẻ gian mua hàng và chọn hình thức chuyển khoản.',
+                    'Gửi cho người bán hình ảnh chụp màn hình thông báo "Chuyển khoản thành công" giả mạo.',
+                    'Tài khoản người bán chưa nhận được tiền, kẻ gian lấy lý do "ngân hàng bảo trì", "chuyển khác mạng".',
+                    'Biên lai giả thường có font chữ sai lệch, màu sắc mờ nhạt, sai lỗi chính tả.'
+                ],
+                prevention: [
+                    'TUYỆT ĐỐI chỉ giao hàng khi tiền ĐÃ VÀO TÀI KHOẢN thực tế, không tin ảnh chụp màn hình.',
+                    'Đăng ký dịch vụ biến động số dư qua SMS hoặc kiểm tra trực tiếp trên ứng dụng ngân hàng.',
+                    'Cảnh giác với các giao dịch mua bán nhỏ lẻ nhưng hối thúc chuyển khoản vội vàng.'
+                ]
+            },
+            {
+                id: 5, title: 'Giả báo người thân cấp cứu', icon: '🚑',
+                signs: [
+                    'Nhận cuộc gọi tự xưng là giáo viên chủ nhiệm, bảo vệ trường hoặc bác sĩ bệnh viện.',
+                    'Thông báo con/cháu đang bị tai nạn, đang cấp cứu cần tiền đóng viện phí gấp để phẫu thuật.',
+                    'Tạo áp lực tâm lý, khóc lóc, hối thúc chuyển tiền ngay vào số tài khoản cá nhân.',
+                    'Gọi vào giờ làm việc hành chính khi phụ huynh khó liên lạc với học sinh.'
+                ],
+                prevention: [
+                    'Bình tĩnh. Tắt máy và gọi trực tiếp cho trường học, giáo viên chủ nhiệm hoặc người thân để xác minh.',
+                    'Tuyệt đối không chuyển tiền ngay lập tức vào số tài khoản cá nhân do người lạ cung cấp.',
+                    'Liên hệ với bệnh viện (nơi được cho là đang cấp cứu) để hỏi thông tin bệnh nhân.'
+                ]
+            },
+            {
+                id: 6, title: 'Lừa đảo tuyển người mẫu nhí', icon: '📸',
+                signs: [
+                    'Quảng cáo Facebook/Zalo về cuộc thi ảnh, tuyển người mẫu nhí hãng thời trang với thù lao cao.',
+                    'Yêu cầu phụ huynh vào nhóm Telegram thực hiện "thử thách" (mua hàng, chuyển tiền).',
+                    'Hứa hẹn hoàn trả tiền cọc + hoa hồng cao.',
+                    'Ban đầu trả sòng phẳng, sau đó yêu cầu số tiền lớn hơn và viện cớ lỗi hệ thống để chiếm đoạt.'
+                ],
+                prevention: [
+                    'Không tham gia các hội nhóm "làm nhiệm vụ", "thử thách" yêu cầu ứng tiền trước.',
+                    'Nhận thức rõ không có công việc nào nhẹ nhàng, lương cao mà yêu cầu phải nạp tiền.',
+                    'Cẩn trọng khi cung cấp hình ảnh, thông tin của con em cho fanpage không rõ nguồn gốc.'
+                ]
+            },
+            {
+                id: 7, title: 'Giả danh công ty tài chính', icon: '🏦',
+                signs: [
+                    'Gửi SMS hoặc gọi điện mời vay vốn lãi suất cực thấp, giải ngân nhanh không cần thế chấp.',
+                    'Yêu cầu tải ứng dụng (App) lạ hoặc truy cập web giả mạo điền thông tin.',
+                    'Khi vay được duyệt, lấy lý do "sai số tài khoản", "phí bảo hiểm" yêu cầu chuyển tiền bảo lãnh.',
+                    'Hăm dọa nếu không chuyển phí bảo lãnh sẽ bị nợ xấu.'
+                ],
+                prevention: [
+                    'Chỉ vay tiền tại các Ngân hàng, Công ty tài chính hợp pháp có văn phòng trực tiếp.',
+                    'Không tải ứng dụng vay tiền từ đường link lạ gửi qua tin nhắn.',
+                    'Tuyệt đối không chuyển tiền phí bảo lãnh khi chưa nhận được khoản vay. Cơ quan uy tín không thu phí trước.'
+                ]
+            },
+            {
+                id: 8, title: 'Link quảng cáo cờ bạc, độc hại', icon: '🔗',
+                signs: [
+                    'Nhận đường link qua SMS, Email, Messenger nội dung giật gân (nhận quà, video sốc).',
+                    'Link tải các ứng dụng không có trên CH Play / App Store (file .apk).',
+                    'Khi truy cập, trang web yêu cầu cấp quyền truy cập danh bạ, tin nhắn hoặc đăng nhập ngân hàng.',
+                    'Tên miền có ký tự lạ (VD: vietcombank.com.vn.xyz).'
+                ],
+                prevention: [
+                    'Nguyên tắc vàng: Không click vào bất kỳ đường link lạ nào được gửi đến.',
+                    'Chỉ cài đặt ứng dụng từ kho ứng dụng chính thức (Google Play Store, App Store).',
+                    'Không bao giờ nhập mật khẩu ngân hàng, mã OTP vào trang web mở từ link tin nhắn.'
+                ]
+            },
+            {
+                id: 9, title: 'Giả mạo trang web cơ quan nhà nước', icon: '🌐',
+                signs: [
+                    'Trang web có giao diện, logo giống hệt cổng dịch vụ công, báo điện tử, trang TMĐT lớn.',
+                    'Mục đích để đánh cắp thông tin đăng nhập (Phishing).',
+                    'Thông tin trên trang thường giật gân, sai lệch hoặc dụ dỗ nạp tiền.'
+                ],
+                prevention: [
+                    'Kiểm tra kỹ địa chỉ trang web (URL) trên thanh trình duyệt trước khi nhập thông tin.',
+                    'Trang web của cơ quan nhà nước Việt Nam luôn có đuôi tên miền là ".gov.vn".',
+                    'Sử dụng các công cụ chặn quảng cáo, bảo mật trình duyệt hoặc công cụ Tín nhiệm mạng (tinnhiemmang.vn).'
+                ]
+            },
+            {
+                id: 10, title: 'Lừa đảo SMS Brandname', icon: '💬',
+                signs: [
+                    'Nhận SMS có tên người gửi là Ngân hàng cảnh báo tài khoản bị khóa, trúng thưởng.',
+                    'Trong tin nhắn chứa đường link truy cập vào trang web giả mạo giao diện ngân hàng.',
+                    'Trang web yêu cầu nhập tên đăng nhập, mật khẩu và mã OTP.'
+                ],
+                prevention: [
+                    'Ngân hàng không bao giờ gửi link yêu cầu đăng nhập và cung cấp mã OTP qua tin nhắn.',
+                    'Không nhấp vào link trong tin nhắn, kể cả khi tin nhắn chung luồng với tin thật của ngân hàng.',
+                    'Chỉ sử dụng ứng dụng (App) chính thức của ngân hàng để kiểm tra.'
+                ]
+            },
+            {
+                id: 11, title: 'Lừa đảo đầu tư chứng khoán, tiền ảo', icon: '📈',
+                signs: [
+                    'Bị thêm vào các nhóm chat Zalo/Telegram có "chuyên gia" đọc lệnh, phím hàng.',
+                    'Cam kết lợi nhuận khủng (20-50%/tháng), bao lỗ, rủi ro bằng 0.',
+                    'Ban đầu nạp ít rút được tiền nhanh. Nạp nhiều hệ thống báo lỗi, yêu cầu nạp thêm để "xác minh".'
+                ],
+                prevention: [
+                    'Cảnh giác với mọi lời mời đầu tư lợi nhuận cao, "việc nhẹ lương cao".',
+                    'Không cài đặt các ứng dụng đầu tư không rõ nguồn gốc (file .apk lạ).',
+                    'Tìm hiểu kỹ về pháp lý của sàn giao dịch, chỉ giao dịch trên sàn được nhà nước cấp phép.'
+                ]
+            },
+            {
+                id: 12, title: 'Lừa đảo tuyển CTV Shopee, Lazada', icon: '🛒',
+                signs: [
+                    'Quảng cáo tuyển cộng tác viên thanh toán đơn hàng ảo để tăng tương tác.',
+                    'Phải ứng tiền thanh toán trước. Vài đơn đầu được hoàn tiền gốc và hoa hồng đầy đủ.',
+                    'Đến đơn hàng giá trị cao, đối tượng viện lý do lỗi hệ thống, bắt nạp thêm tiền để rút.'
+                ],
+                prevention: [
+                    'Các sàn TMĐT uy tín KHÔNG có hình thức tuyển CTV ứng tiền chốt đơn ảo nhận hoa hồng.',
+                    'Tuyệt đối không chuyển tiền vào tài khoản cá nhân của người tự xưng là quản lý.',
+                    'Từ chối mọi công việc online yêu cầu phải nạp tiền/đóng phí trước.'
+                ]
+            },
+            {
+                id: 13, title: 'Đánh cắp tài khoản MXH, mượn tiền', icon: '🕵️',
+                signs: [
+                    'Tài khoản Facebook/Zalo của bạn bè bất ngờ nhắn tin mượn tiền gấp.',
+                    'Cách nhắn tin khác thường ngày. Có thể từ chối nghe gọi hoặc gọi video rất ngắn gọn (Deepfake).',
+                    'Cung cấp số tài khoản nhận tiền mang tên người khác.'
+                ],
+                prevention: [
+                    'Chủ động gọi điện thoại trực tiếp (gọi số điện thoại thông thường) để xác minh.',
+                    'Bật bảo mật 2 lớp cho các tài khoản mạng xã hội.',
+                    'Không bao giờ nhấp vào link lạ yêu cầu đăng nhập lại tài khoản Facebook/Zalo.'
+                ]
+            },
+            {
+                id: 14, title: 'Giả danh Công an, Viện kiểm sát', icon: '⚖️',
+                signs: [
+                    'Gọi điện tự xưng cán bộ điều tra, thông báo bạn liên quan đường dây rửa tiền, ma túy hoặc phạt nguội.',
+                    'Gửi "Lệnh bắt giữ", "Giấy triệu tập" giả qua Zalo/Viber để đe dọa.',
+                    'Yêu cầu chuyển toàn bộ tiền vào "tài khoản tạm giữ" để chứng minh trong sạch.'
+                ],
+                prevention: [
+                    'Cơ quan Công an, VKS KHÔNG làm việc, yêu cầu chuyển tiền qua điện thoại, mạng xã hội.',
+                    'Khi có việc, cơ quan chức năng sẽ gửi Giấy mời trực tiếp về địa phương cư trú.',
+                    'Tuyệt đối không cung cấp thông tin tài khoản ngân hàng, mã OTP cho người gọi.'
+                ]
+            },
+            {
+                id: 15, title: 'Rao bán hàng giả trên mạng', icon: '🛍️',
+                signs: [
+                    'Lập gian hàng bán đồ hiệu, đồ điện tử giá rẻ hơn rất nhiều so với thị trường.',
+                    'Sử dụng hình ảnh thật nhưng giao hàng giả, hàng kém chất lượng.',
+                    'Yêu cầu chuyển khoản trước hoặc dùng dịch vụ giao hàng không cho phép đồng kiểm.'
+                ],
+                prevention: [
+                    'Mua sắm tại các gian hàng chính hãng (Mall) hoặc website uy tín có đăng ký với Bộ Công Thương.',
+                    'Đọc kỹ đánh giá, bình luận của người mua trước đó.',
+                    'Luôn chọn thanh toán khi nhận hàng (COD) và yêu cầu được đồng kiểm (xem hàng trước).'
+                ]
+            },
+            {
+                id: 16, title: 'Đánh cắp CCCD vay tín dụng đen', icon: '🪪',
+                signs: [
+                    'Đăng bài thuê mượn CMND/CCCD/Tài khoản ngân hàng với giá cao.',
+                    'Lừa nạn nhân chụp ảnh CCCD 2 mặt và ảnh khuôn mặt để làm thủ tục "nhận thưởng", "cập nhật sim".',
+                    'Lấy thông tin đó đăng ký vay tiền trên app tín dụng đen, nạn nhân bỗng dưng mang nợ xấu.'
+                ],
+                prevention: [
+                    'Tuyệt đối bảo mật thông tin cá nhân, không đăng ảnh CCCD lên mạng.',
+                    'Không cho mượn, cho thuê CCCD, thẻ ngân hàng dưới mọi hình thức.',
+                    'Đóng dấu bản sao (Ghi rõ: Bản sao dùng để...) khi cung cấp CCCD cho các dịch vụ.'
+                ]
+            },
+            {
+                id: 17, title: 'Lừa đảo chuyển nhầm tiền', icon: '💸',
+                signs: [
+                    'Bất ngờ nhận được một khoản tiền lạ vào tài khoản.',
+                    'Ngay sau đó có người tự xưng chuyển nhầm, xin lại số tiền vào một tài khoản KHÁC (biến bạn thành trạm trung chuyển rửa tiền/lừa đảo).',
+                    'Hoặc báo đây là khoản vay cắt cổ và bắt đầu đòi nợ.'
+                ],
+                prevention: [
+                    'Không tự ý chuyển trả lại tiền vào một số tài khoản lạ do người gọi cung cấp.',
+                    'Liên hệ ngay với ngân hàng của bạn để báo cáo và nhờ ngân hàng xử lý tra soát.',
+                    'Nếu bị đe dọa đòi nợ, hãy trình báo sự việc với cơ quan Công an.'
+                ]
+            },
+            {
+                id: 18, title: 'Dịch vụ "lấy lại tiền đã mất"', icon: '🎣',
+                signs: [
+                    'Nạn nhân lên mạng tìm cách lấy lại tiền vừa bị lừa.',
+                    'Gặp các trang tự xưng "Luật sư an ninh mạng", "Hỗ trợ thu hồi tiền treo".',
+                    'Yêu cầu nạn nhân đóng trước "phí dịch vụ", "phí kích hoạt hệ thống" để lấy lại tiền rồi chiếm đoạt nốt.'
+                ],
+                prevention: [
+                    'Chỉ có cơ quan chức năng (Công an) mới có thẩm quyền điều tra thu hồi tài sản lừa đảo.',
+                    'Không tin các tổ chức/cá nhân quảng cáo trên mạng cam kết lấy lại tiền 100%.',
+                    'Tuyệt đối không chuyển thêm tiền (phí dịch vụ) để mong chuộc lại số tiền đã mất.'
+                ]
+            },
+            {
+                id: 19, title: 'Lấy cắp Telegram/Zalo OTP', icon: '🔐',
+                signs: [
+                    'Nhận tin nhắn từ người quen (đã bị hack nick) nhờ bình chọn, hoặc nhờ chụp ảnh màn hình vì máy họ bị lỗi.',
+                    'Tin nhắn thực chất chứa mã OTP đăng nhập Telegram/Zalo của chính bạn.',
+                    'Gửi ảnh màn hình = gửi mã OTP cho kẻ gian chiếm tài khoản.'
+                ],
+                prevention: [
+                    'Tuyệt đối không chia sẻ mã OTP (dạng văn bản hoặc ảnh chụp màn hình) cho bất kỳ ai.',
+                    'Thiết lập mật khẩu 2 lớp (Two-Step Verification/2FA) cho tất cả ứng dụng nhắn tin.',
+                    'Cảnh giác khi ai đó đột nhiên nhờ chụp ảnh màn hình điện thoại của bạn.'
+                ]
+            },
+            {
+                id: 20, title: 'Tung tin giả cuộc gọi mất tiền', icon: '📢',
+                signs: [
+                    'Lan truyền bài cảnh báo: "Không nghe máy các đầu số lạ hoặc tên FlashAI để tránh bị trừ tiền trong thẻ".',
+                    'Thực chất việc "chỉ nghe máy mà bị trừ tiền ngân hàng" là KHÔNG THỂ xảy ra về công nghệ viễn thông.',
+                    'Mục đích để câu like, câu view gây hoang mang.'
+                ],
+                prevention: [
+                    'Chỉ tiếp nhận thông tin cảnh báo từ cổng thông tin chính thống cơ quan nhà nước, báo chí.',
+                    'Không vội vàng share (chia sẻ) các bài viết chưa được kiểm chứng.',
+                    'Chỉ mất tiền khi bạn làm theo hướng dẫn của cuộc gọi (chuyển tiền, đọc OTP, click link).'
+                ]
+            },
+            {
+                id: 21, title: 'Lừa đảo lấy lại tài khoản Facebook', icon: '🔓',
+                signs: [
+                    'Tìm đến các dịch vụ "Mở khóa FB", "Lấy lại nick" trên mạng khi bị mất tài khoản.',
+                    'Đối tượng yêu cầu cung cấp ảnh CCCD, số điện thoại, email và chuyển khoản phí trước.',
+                    'Sau khi nhận tiền, đối tượng chặn liên lạc và dùng CCCD của bạn đi lừa người khác.'
+                ],
+                prevention: [
+                    'Chỉ sử dụng các công cụ hỗ trợ khôi phục tài khoản chính thức tại facebook.com/hacked.',
+                    'Không giao giấy tờ tùy thân, tiền bạc cho các dịch vụ không rõ ràng.',
+                    'Bảo vệ tài khoản bằng việc thêm Email, SĐT chính chủ và cài bảo mật 2 lớp.'
+                ]
+            },
+            {
+                id: 22, title: 'Lừa đảo tình cảm, dẫn dụ đầu tư', icon: '❤️',
+                signs: [
+                    'Làm quen qua ứng dụng hẹn hò (Tinder), tạo vỏ bọc doanh nhân thành đạt, ngoại hình đẹp.',
+                    'Sau thời gian nhắn tin tình cảm, dụ dỗ tham gia đầu tư tiền ảo, chứng khoán quốc tế.',
+                    'Hoặc thông báo gửi quà từ nước ngoài về, yêu cầu nạn nhân đóng "thuế hải quan" để nhận.'
+                ],
+                prevention: [
+                    'Không tin tưởng người mới quen trên mạng có vỏ bọc quá hoàn hảo.',
+                    'Tuyệt đối không chuyển tiền, tham gia đầu tư theo lời mời của người chưa từng gặp mặt ngoài đời.',
+                    'Cơ quan Hải quan không bao giờ yêu cầu người dân chuyển tiền vào tài khoản cá nhân.'
+                ]
+            },
+            {
+                id: 23, title: 'Rải link phishing trên Facebook', icon: '🕷️',
+                signs: [
+                    'Các bình luận (comment) chứa đường link rác trên Fanpage lớn, kèm hình ảnh sốc, khiêu dâm.',
+                    'Quảng cáo nội dung sai sự thật, bán thuốc đông y trị bách bệnh.',
+                    'Click vào link sẽ dẫn đến trang web độc hại đánh cắp tài khoản (Phishing) hoặc cài mã độc.'
+                ],
+                prevention: [
+                    'Tuyệt đối không tò mò click vào các đường link lạ ở phần bình luận.',
+                    'Cẩn trọng với các bài đăng quảng cáo bán thuốc chữa bệnh nan y không rõ nguồn gốc.',
+                    'Báo cáo (Report) các bình luận, bài đăng quảng cáo độc hại để Facebook xử lý.'
+                ]
+            },
+            {
+                id: 24, title: 'Lừa đảo cho số lô đề chuẩn', icon: '🎲',
+                signs: [
+                    'Quảng cáo rầm rộ về "Tập đoàn xổ số", "Bán số lô đề chuẩn 100%".',
+                    'Cam kết đánh là trúng, trượt đền tiền. Yêu cầu chuyển khoản tiền "mua số" trước.',
+                    'Thực chất chúng cho số ngẫu nhiên. Trúng thì đòi hoa hồng, trượt thì chặn liên lạc.'
+                ],
+                prevention: [
+                    'Nhận thức rõ hành vi đánh bạc, lô đề là vi phạm pháp luật Việt Nam.',
+                    'Không có tổ chức/cá nhân nào có khả năng biết trước kết quả xổ số kiến thiết.',
+                    'Tránh xa các hội nhóm cờ bạc trên mạng xã hội.'
+                ]
+            }
+        ];
+
+        // Core Elements
+        const scamListEl = document.getElementById('scamList');
+        const searchInput = document.getElementById('searchInput');
+        const defaultStateEl = document.getElementById('defaultState');
+        const detailStateEl = document.getElementById('detailState');
+        const detailIconEl = document.getElementById('detailIcon');
+        const detailTitleEl = document.getElementById('detailTitle');
+        const detailSignsEl = document.getElementById('detailSigns');
+        const detailPreventionEl = document.getElementById('detailPrevention');
+
+        function renderList(data) {
+            scamListEl.innerHTML = ''; 
+            if (data.length === 0) {
+                scamListEl.innerHTML = '<div class="text-center text-gray-500 py-6">Không tìm thấy kết quả phù hợp.</div>';
+                return;
+            }
+
+            data.forEach(scam => {
+                const item = document.createElement('div');
+                item.className = 'scam-card bg-white p-3 mb-2 rounded border border-gray-100 flex items-center shadow-sm';
+                item.innerHTML = `
+                    <span class="text-2xl mr-3">${scam.icon}</span>
+                    <h3 class="font-medium text-gray-800 text-sm">${scam.title}</h3>
+                `;
+                
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.scam-card').forEach(el => el.classList.remove('active'));
+                    item.classList.add('active');
+                    showDetails(scam);
+                    
+                    if(window.innerWidth < 1024) {
+                         document.getElementById('scamDetailContainer').scrollIntoView({behavior: "smooth", block: "start"});
+                    }
+                });
+                scamListEl.appendChild(item);
+            });
+        }
+
+        function showDetails(scam) {
+            defaultStateEl.classList.add('hidden');
+            
+            // Animation Reset
+            detailStateEl.classList.remove('fade-in');
+            void detailStateEl.offsetWidth; 
+            detailStateEl.classList.remove('hidden');
+            detailStateEl.classList.add('fade-in');
+
+            // Populate text
+            detailIconEl.textContent = scam.icon;
+            detailTitleEl.textContent = scam.title;
+            
+            detailSignsEl.innerHTML = scam.signs.map(sign => `<li>${sign}</li>`).join('');
+            detailPreventionEl.innerHTML = scam.prevention.map(prev => `<li>${prev}</li>`).join('');
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = scamData.filter(scam => 
+                scam.title.toLowerCase().includes(term) ||
+                scam.signs.some(s => s.toLowerCase().includes(term))
+            );
+            renderList(filtered);
+        });
+
+        function initChart() {
+            const ctx = document.getElementById('targetAudienceChart').getContext('2d');
+            const config = {
+                type: 'bar',
+                data: {
+                    labels: ['Người cao tuổi', 'Sinh viên/Người tìm việc', 'Nhân viên văn phòng', 'Nội trợ', 'Trẻ em/Vị thành niên'],
+                    datasets: [{
+                        label: 'Chỉ số rủi ro bị lừa đảo (Minh họa)',
+                        data: [85, 75, 60, 70, 50],
+                        backgroundColor: [
+                            'rgba(239, 68, 68, 0.8)', 'rgba(245, 158, 11, 0.8)', 
+                            'rgba(59, 130, 246, 0.8)', 'rgba(16, 185, 129, 0.8)', 'rgba(139, 92, 246, 0.8)'
+                        ],
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { beginAtZero: true, max: 100, title: { display: true, text: 'Mức độ rủi ro (%)' } }
+                    }
+                }
+            };
+            new Chart(ctx, config);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderList(scamData);
+            initChart();
+        });
+    </script>
+</body>
+</html>
