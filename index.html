@@ -3,138 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lá Chắn Số - Nền Tảng Nhận Thức Lừa Đảo Trực Tuyến</title>
+    <title>🛡️ Lá Chắn Số - Nền Tảng Nhận Thức Lừa Đảo Trực Tuyến</title>
     
-    <!-- Meta tags for Add to Home Screen (iOS & Android) -->
+    <!-- Favicon & App Icons (Vector Base64) -->
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBkPSJNNTAgNSBMMjAgMTUgVjQ1IEMyMCA3MCA1MCA5MCA1MCA5MCBDNTAgOTAgODAgNzAgODAgNDUgVjE1IFoiIGZpbGw9IiMwZWE1ZTkiLz48L3N2Zz4=">
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMGVhNWU5Ii8+PHBhdGggZD0iTTUwIDE1IEwyMCAyNSBWNDUgQzIwIDcwIDUwIDg1IDUwIDg1IEM1MCA4NSA4MCA3MCA4MCA0NSBWMjUgWiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Lá Chắn Số">
-    <link rel="manifest" href='data:application/manifest+json,{"name":"Lá Chắn Số","short_name":"Lá Chắn Số","start_url":".","display":"standalone","background_color":"#f8fafc","theme_color":"#0ea5e9"}'>
+    <link rel="manifest" href='data:application/manifest+json,{"name":"Lá Chắn Số","short_name":"Lá Chắn Số","start_url":".","display":"standalone","background_color":"#f8fafc","theme_color":"#0ea5e9","icons":[{"src":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMGVhNWU5Ii8+PHBhdGggZD0iTTUwIDE1IEwyMCAyNSBWNDUgQzIwIDcwIDUwIDg1IDUwIDg1IEM1MCA4NSA4MCA3MCA4MCA0NSBWMjUgWiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=","sizes":"192x192 512x512","type":"image/svg+xml","purpose":"any maskable"}]}'>
     
-    <!-- Tailwind CSS -->
+    <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            900: '#0c4a6e',
-                        },
-                        alert: {
-                            100: '#fee2e2',
-                            500: '#ef4444',
-                            700: '#b91c1c',
-                        }
+                        brand: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e' },
+                        alert: { 50: '#fef2f2', 100: '#fee2e2', 200: '#fecaca', 500: '#ef4444', 600: '#dc2626', 700: '#b91c1c', 800: '#991b1b', 900: '#7f1d1d' }
                     },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    }
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
                 }
             }
         }
     </script>
 
     <style>
-        /* Custom styles for specific requirements */
-        body {
-            background-color: #f8fafc; /* Tailwind slate-50 */
-            color: #334155; /* Tailwind slate-700 */
-        }
-        
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px;
-            max-height: 400px;
-        }
-
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
-        }
-
-        /* Styling for the interactive selection state */
-        .scam-item.active {
-            border-left: 4px solid #ef4444;
-            background-color: #fee2e2;
-        }
-
-        /* Custom Scrollbar for the 24-scam list */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f5f9; 
-            border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
-        }
-
-        /* Chatbot Typing Animation */
-        .typing-indicator span {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background-color: #94a3b8;
-            border-radius: 50%;
-            animation: typing 1.4s infinite ease-in-out both;
-            margin: 0 2px;
-        }
+        body { background-color: #f8fafc; color: #334155; }
+        .chart-container { position: relative; width: 100%; max-width: 100%; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .scam-item.active { border-left: 4px solid #ef4444; background-color: #fee2e2; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
+        .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #94a3b8; border-radius: 50%; animation: typing 1.4s infinite ease-in-out both; margin: 0 2px; }
         .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
         .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-        
-        @keyframes typing {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
-        }
-
-        /* Glassmorphism effect for nav */
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-        }
+        @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 
     <!-- Chosen Palette: Warm Neutrals (Slate) for background, Sky Blue for trust/primary, Red for alerts/warnings. -->
-    
-    <!-- Application Structure Plan: 
-         1. Hero Section: Establish urgency and the core message.
-         2. Data Dashboard (Toàn Cảnh): Use charts to show the scale and demographics of the problem, answering "Why should I care?".
-         3. Interactive Typology Explorer (Nhận Diện Thủ Đoạn): A master-detail view. Users click on a scam type to see details, red flags, and examples dynamically. This prevents information overload and encourages active learning.
-         4. Defense Playbook (Cẩm Nang Phòng Vệ): Actionable, easy-to-remember rules (3 Không, 3 Chậm) presented in clear visual blocks.
-         5. Reporting/Help: Clear next steps for victims.
-         Rationale: Guides the user from Awareness -> Understanding -> Action without leaving the page. -->
-
-    <!-- Visualization & Content Choices: 
-         - Overall Trend (Goal: Show urgency): Line chart (Chart.js) showing rising incidents.
-         - Victim Demographics (Goal: Show vulnerability): Doughnut chart (Chart.js) breaking down victims by age.
-         - Scam Methods (Goal: Educate): Master-detail interactive layout using Vanilla JS. Avoids long text walls.
-         - NO SVG/Mermaid used. Icons are Unicode characters. -->
-    
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- Application Structure Plan: Hero Section -> Data Dashboard -> Interactive Typology Explorer (Master-Detail) -> Defense Playbook -> Emergency Contacts -> AI Chatbot. -->
+    <!-- Visualization & Content Choices: Trend (Line Chart), Demographics (Doughnut Chart), Scam List (Interactive Grid). -->
+    <!-- CONFIRMATION: NO SVG graphics used (except vector base64 for manifest). NO Mermaid JS used. -->
 </head>
 <body class="antialiased">
 
-    <!-- Navigation -->
+    <!-- Navbar -->
     <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
@@ -143,25 +65,22 @@
                     <span class="font-bold text-xl tracking-tight text-slate-800">Lá Chắn Số</span>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#tong-quan" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Tổng Quan</a>
-                    <a href="#thu-doan" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Nhận Diện Thủ Đoạn</a>
-                    <a href="#phong-ve" class="text-slate-600 hover:text-brand-600 font-medium transition-colors">Kỹ Năng Phòng Vệ</a>
-                    <a href="#bao-cao" class="text-slate-600 hover:text-alert-600 font-medium transition-colors">Trình Báo Khẩn Cấp</a>
+                    <a href="#tong-quan" class="text-slate-600 hover:text-brand-600 font-medium transition-colors flex items-center gap-1.5"><span class="text-lg">&#128202;</span> Tổng Quan</a>
+                    <a href="#thu-doan" class="text-slate-600 hover:text-brand-600 font-medium transition-colors flex items-center gap-1.5"><span class="text-lg">&#128269;</span> Nhận Diện</a>
+                    <a href="#phong-ve" class="text-slate-600 hover:text-brand-600 font-medium transition-colors flex items-center gap-1.5"><span class="text-lg">&#128304;</span> Phòng Vệ</a>
+                    <a href="#bao-cao" class="text-alert-600 hover:text-alert-700 font-medium transition-colors flex items-center gap-1.5"><span class="text-lg">&#128680;</span> Trình Báo</a>
                 </div>
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-brand-600 focus:outline-none">
-                        <span class="text-2xl">&#9776;</span>
-                    </button>
+                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-brand-600 focus:outline-none"><span class="text-2xl">&#9776;</span></button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#tong-quan" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Tổng Quan</a>
-                <a href="#thu-doan" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Nhận Diện</a>
-                <a href="#phong-ve" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50">Phòng Vệ</a>
-                <a href="#bao-cao" class="block px-3 py-2 rounded-md text-base font-medium text-alert-700 hover:text-alert-800 hover:bg-alert-50">Trình Báo Khẩn Cấp</a>
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-lg">
+                <a href="#tong-quan" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50 flex items-center gap-2"><span>&#128202;</span> Tổng Quan</a>
+                <a href="#thu-doan" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50 flex items-center gap-2"><span>&#128269;</span> Nhận Diện</a>
+                <a href="#phong-ve" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-brand-600 hover:bg-slate-50 flex items-center gap-2"><span>&#128304;</span> Phòng Vệ</a>
+                <a href="#bao-cao" class="block px-3 py-2 rounded-md text-base font-medium text-alert-700 hover:text-alert-800 hover:bg-alert-50 flex items-center gap-2"><span>&#128680;</span> Trình Báo Khẩn Cấp</a>
             </div>
         </div>
     </nav>
@@ -175,233 +94,159 @@
             Đừng để trở thành <br class="hidden md:block"/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-alert-500 to-orange-500">Nạn nhân tiếp theo</span>
         </h1>
         <p class="mt-4 max-w-2xl mx-auto text-xl text-slate-600 mb-10">
-            Trang bị kiến thức là vũ khí tốt nhất để bảo vệ tài sản và thông tin cá nhân của bạn trên không gian mạng. Khám phá các số liệu và thủ đoạn mới nhất.
+            Trang bị kiến thức là vũ khí tốt nhất để bảo vệ tài sản và thông tin cá nhân của bạn. Khám phá kho dữ liệu nhận diện 24 thủ đoạn lừa đảo chi tiết nhất.
         </p>
-        <div class="flex justify-center gap-4">
-            <a href="#thu-doan" class="px-8 py-3 rounded-lg bg-brand-600 text-white font-semibold hover:bg-brand-700 transition-colors shadow-lg shadow-brand-500/30">
-                Nhận diện lừa đảo
+        <div class="flex justify-center gap-4 flex-wrap">
+            <a href="#thu-doan" class="px-8 py-3 rounded-lg bg-brand-600 text-white font-semibold hover:bg-brand-700 transition-colors shadow-lg shadow-brand-500/30 flex items-center gap-2">
+                <span class="text-xl">&#128065;</span> Nhận diện lừa đảo
             </a>
-            <a href="#tong-quan" class="px-8 py-3 rounded-lg bg-white text-slate-700 font-semibold border border-slate-300 hover:bg-slate-50 transition-colors">
-                Xem thống kê
+            <a href="#bao-cao" class="px-8 py-3 rounded-lg bg-alert-600 text-white font-semibold hover:bg-alert-700 transition-colors shadow-lg shadow-alert-500/30 flex items-center gap-2">
+                <span class="text-xl">&#128680;</span> Xử lý khẩn cấp
             </a>
         </div>
     </section>
 
-    <!-- Section: Dữ Liệu Tổng Quan -->
+    <!-- Data Dashboard Section -->
     <section id="tong-quan" class="py-16 bg-white border-y border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12 text-center md:text-left">
-                <h2 class="text-3xl font-bold text-slate-900 mb-4">Bức Tranh Toàn Cảnh (Cập nhật 2025)</h2>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Bức Tranh Toàn Cảnh (Cập nhật 2026)</h2>
                 <p class="text-lg text-slate-600 max-w-3xl">
-                    Từ cuối 2024 đến 2025, sau khi quy định <strong class="text-brand-600">Xác thực Sinh trắc học</strong> (QĐ 2345/NHNN) được áp dụng diện rộng, tội phạm mạng đã chuyển hướng mạnh sang lừa nạn nhân tự cài đặt App độc hại hoặc dùng Deepfake lừa người thân chuyển tiền dưới hạn mức.
+                    Sau khi áp dụng <strong class="text-brand-600">Xác thực Sinh trắc học</strong>, tội phạm đã chuyển hướng sang lừa nạn nhân tự cài đặt App độc hại để chiếm quyền điều khiển điện thoại, hoặc dùng công nghệ Deepfake mạo danh tinh vi.
                 </p>
             </div>
-
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- Chart 1: Trend -->
                 <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 shadow-sm">
                     <h3 class="text-xl font-semibold text-slate-800 mb-2">Gia tăng số vụ báo cáo (2021 - 2025)</h3>
-                    <p class="text-sm text-slate-500 mb-6">Mặc dù có các biện pháp chặn dòng tiền, số lượng vụ việc vẫn ở mức cao do hình thức lừa đảo ngày càng tinh vi.</p>
-                    <div class="chart-container">
-                        <canvas id="trendChart"></canvas>
-                    </div>
-                    <div class="mt-4 text-sm text-slate-600 bg-white p-3 rounded border border-slate-200">
-                        <span class="font-semibold text-alert-600">&#8593; Điểm nhấn 2025:</span> Các vụ lừa qua App chiếm quyền điều khiển (Accessibility) tăng vọt, nhắm vào sự thiếu hiểu biết về công nghệ của người dùng.
-                    </div>
+                    <p class="text-sm text-slate-500 mb-6">Số vụ việc ghi nhận vẫn tăng do kẻ gian đánh vào sự thiếu hiểu biết công nghệ của người dân.</p>
+                    <div class="chart-container"><canvas id="trendChart"></canvas></div>
                 </div>
-
-                <!-- Chart 2: Demographics -->
                 <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 shadow-sm">
-                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Nhóm đối tượng dễ tổn thương</h3>
-                    <p class="text-sm text-slate-500 mb-6">Tỷ lệ phân bổ nạn nhân theo độ tuổi dựa trên các báo cáo mới nhất.</p>
-                    <div class="chart-container">
-                        <canvas id="demographicChart"></canvas>
-                    </div>
-                    <div class="mt-4 text-sm text-slate-600 bg-white p-3 rounded border border-slate-200">
-                        <span class="font-semibold text-alert-600">&#9888; Cảnh báo:</span> Người cao tuổi và thanh niên (sinh viên, người mới đi làm) là mục tiêu bị nhắm tới nhiều nhất.
-                    </div>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-2">Nhóm nạn nhân theo độ tuổi</h3>
+                    <p class="text-sm text-slate-500 mb-6">Thanh niên và sinh viên bị lừa đảo tìm việc làm, vay tiền online tăng đột biến, gần ngang bằng người cao tuổi.</p>
+                    <div class="chart-container"><canvas id="demographicChart"></canvas></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section: Nhận Diện Thủ Đoạn (Interactive) -->
+    <!-- 24 Scams Interactive Section -->
     <section id="thu-doan" class="py-20 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12">
                 <h2 class="text-3xl font-bold text-slate-900 mb-4">Nhận Diện 24 Hình Thức Lừa Đảo</h2>
                 <p class="text-lg text-slate-600 max-w-3xl">
-                    Dưới đây là 24 thủ đoạn lừa đảo trực tuyến phổ biến nhất hiện nay (theo Cục ATTT). <span class="font-semibold text-brand-600">Sử dụng thanh tìm kiếm hoặc cuộn để chọn một hình thức</span> khám phá cách thức hoạt động và dấu hiệu nhận biết.
+                    Kho dữ liệu chi tiết về 24 thủ đoạn phổ biến nhất. <span class="font-semibold text-brand-600">Sử dụng thanh tìm kiếm hoặc cuộn danh sách</span> để hiểu rõ đòn tâm lý của kẻ gian và cách phòng vệ.
                 </p>
             </div>
-
             <div class="flex flex-col lg:flex-row gap-8 relative items-start">
-                
-                <!-- Sidebar: List of 24 Scams -->
                 <div class="w-full lg:w-1/3 flex flex-col gap-4">
-                    <!-- Search Bar -->
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xl">&#128269;</span>
-                        <input type="text" id="scam-search" placeholder="Tìm kiếm thủ đoạn (vd: cấp cứu, deepfake...)" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 shadow-sm transition-shadow">
+                        <input type="text" id="scam-search" placeholder="Tìm kiếm (vd: cài app, giả danh, việc làm...)" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 shadow-sm transition-shadow">
                     </div>
-                    
-                    <!-- Scrollable List -->
-                    <div class="flex flex-col gap-2 h-[600px] overflow-y-auto pr-2 custom-scrollbar" id="scam-list-container">
-                        <!-- Javascript will populate this -->
-                    </div>
+                    <div class="flex flex-col gap-2 h-[600px] overflow-y-auto pr-2 custom-scrollbar" id="scam-list-container"></div>
                 </div>
-
-                <!-- Main Content: Details of selected scam (Sticky) -->
                 <div class="w-full lg:w-2/3 bg-white rounded-2xl shadow-md border border-slate-200 p-6 lg:p-10 transition-all duration-300 sticky top-24" id="scam-detail-container">
-                    <div class="h-full flex flex-col items-center justify-center text-center text-slate-400 min-h-[500px]">
-                        <span class="text-6xl mb-4">&#128072;</span>
-                        <p class="text-lg">Vui lòng chọn một thủ đoạn ở danh sách bên cạnh để xem chi tiết.</p>
-                    </div>
+                    <!-- Content injected via JS -->
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section: Kỹ Năng Phòng Vệ -->
+    <!-- Defense Section -->
     <section id="phong-ve" class="py-20 bg-brand-900 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold mb-4">Cẩm Nang Phòng Vệ Chủ Động</h2>
-                <p class="text-lg text-brand-100 max-w-2xl mx-auto">
-                    Ghi nhớ những nguyên tắc cốt lõi này như một phản xạ tự nhiên mỗi khi tham gia không gian mạng.
-                </p>
+                <p class="text-lg text-brand-100 max-w-2xl mx-auto">Ghi nhớ những nguyên tắc cốt lõi này như một phản xạ tự nhiên mỗi khi tham gia không gian mạng.</p>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <!-- Quy tắc 3 KHÔNG -->
-                <div class="bg-brand-800 rounded-2xl p-8 border border-brand-700">
+                <!-- 3 KHÔNG -->
+                <div class="bg-brand-800 rounded-2xl p-8 border border-brand-700 shadow-lg">
                     <div class="flex items-center gap-3 mb-6 border-b border-brand-600 pb-4">
                         <span class="text-4xl text-alert-400">&#10060;</span>
                         <h3 class="text-2xl font-bold text-white">Nguyên Tắc 3 KHÔNG</h3>
                     </div>
                     <ul class="space-y-6">
-                        <li class="flex gap-4">
-                            <span class="text-brand-300 text-xl mt-1">&#10145;</span>
-                            <div>
-                                <strong class="block text-lg text-white mb-1">KHÔNG cung cấp thông tin cá nhân</strong>
-                                <p class="text-brand-100 text-sm">Mã OTP, mật khẩu, thông tin thẻ tín dụng, CMND/CCCD cho bất kỳ ai, kể cả người tự xưng là công an, nhân viên ngân hàng.</p>
-                            </div>
-                        </li>
-                        <li class="flex gap-4">
-                            <span class="text-brand-300 text-xl mt-1">&#10145;</span>
-                            <div>
-                                <strong class="block text-lg text-white mb-1">KHÔNG truy cập đường link lạ</strong>
-                                <p class="text-brand-100 text-sm">Các link gửi qua SMS, Zalo, Messenger, Email từ người lạ hoặc tin nhắn có nội dung hối thúc, dọa nạt, trúng thưởng.</p>
-                            </div>
-                        </li>
-                        <li class="flex gap-4">
-                            <span class="text-brand-300 text-xl mt-1">&#10145;</span>
-                            <div>
-                                <strong class="block text-lg text-white mb-1">KHÔNG chuyển tiền</strong>
-                                <p class="text-brand-100 text-sm">Khi chưa xác minh rõ ràng danh tính người nhận bằng cách gọi điện thoại trực tiếp (thoại/video) hoặc gặp mặt.</p>
-                            </div>
-                        </li>
+                        <li class="flex gap-4"><span class="text-brand-300 text-xl mt-1">&#10145;</span><div><strong class="block text-lg text-white mb-1">KHÔNG cung cấp thông tin</strong><p class="text-brand-100 text-sm">Tuyệt đối bảo mật Mã OTP, mật khẩu, hình ảnh CCCD cho bất kỳ ai, kể cả người tự xưng là công an, ngân hàng.</p></div></li>
+                        <li class="flex gap-4"><span class="text-brand-300 text-xl mt-1">&#10145;</span><div><strong class="block text-lg text-white mb-1">KHÔNG bấm link lạ</strong><p class="text-brand-100 text-sm">Các link gửi qua SMS, Zalo, Email có nội dung hối thúc, dọa nạt, hoặc thông báo trúng thưởng.</p></div></li>
+                        <li class="flex gap-4"><span class="text-brand-300 text-xl mt-1">&#10145;</span><div><strong class="block text-lg text-white mb-1">KHÔNG chuyển tiền ngay</strong><p class="text-brand-100 text-sm">Chưa xác minh danh tính người nhận bằng cách gọi điện thoại thoại (SIM viễn thông) thì tuyệt đối không chuyển khoản.</p></div></li>
                     </ul>
                 </div>
-
-                <!-- Quy tắc 3 CHẬM -->
-                <div class="bg-brand-800 rounded-2xl p-8 border border-brand-700">
+                <!-- 3 CHẬM -->
+                <div class="bg-brand-800 rounded-2xl p-8 border border-brand-700 shadow-lg">
                      <div class="flex items-center gap-3 mb-6 border-b border-brand-600 pb-4">
                         <span class="text-4xl text-yellow-400">&#9208;</span>
                         <h3 class="text-2xl font-bold text-white">Quy Tắc 3 CHẬM</h3>
                     </div>
                     <ul class="space-y-6">
-                        <li class="flex gap-4">
-                            <span class="text-brand-300 text-xl mt-1">&#10145;</span>
-                            <div>
-                                <strong class="block text-lg text-white mb-1">CHẬM lại để quan sát</strong>
-                                <p class="text-brand-100 text-sm">Khi nhận được một thông tin quá tốt (trúng thưởng lớn) hoặc quá tồi tệ (bị phạt tù, khóa tài khoản), hãy hít một hơi thật sâu. Kẻ gian luôn muốn bạn hành động vội vã.</p>
-                            </div>
-                        </li>
-                        <li class="flex gap-4">
-                            <span class="text-brand-300 text-xl mt-1">&#10145;</span>
-                            <div>
-                                <strong class="block text-lg text-white mb-1">CHẬM lại để đánh giá</strong>
-                                <p class="text-brand-100 text-sm">Kiểm tra kỹ địa chỉ email người gửi, tên miền trang web (có sai chính tả không?). Ngân hàng và cơ quan nhà nước không bao giờ làm việc qua Zalo hay yêu cầu chuyển tiền vào tài khoản cá nhân.</p>
-                            </div>
-                        </li>
-                        <li class="flex gap-4">
-                            <span class="text-brand-300 text-xl mt-1">&#10145;</span>
-                            <div>
-                                <strong class="block text-lg text-white mb-1">CHẬM lại để kiểm chứng</strong>
-                                <p class="text-brand-100 text-sm">Gọi điện thoại cho đường dây nóng chính thức của ngân hàng/cơ quan (tìm trên Google, không gọi số trong tin nhắn) hoặc hỏi ý kiến người thân trước khi quyết định.</p>
-                            </div>
-                        </li>
+                        <li class="flex gap-4"><span class="text-brand-300 text-xl mt-1">&#10145;</span><div><strong class="block text-lg text-white mb-1">CHẬM lại để quan sát</strong><p class="text-brand-100 text-sm">Khi nhận được thông tin quá tốt (trúng thưởng) hoặc quá tồi tệ (phạt tù, tai nạn), hãy hít thở sâu. Kẻ gian muốn bạn hoảng loạn.</p></div></li>
+                        <li class="flex gap-4"><span class="text-brand-300 text-xl mt-1">&#10145;</span><div><strong class="block text-lg text-white mb-1">CHẬM lại để đánh giá</strong><p class="text-brand-100 text-sm">Cơ quan nhà nước KHÔNG BAO GIỜ làm việc qua Zalo hay yêu cầu chuyển tiền vào tài khoản cá nhân để "điều tra".</p></div></li>
+                        <li class="flex gap-4"><span class="text-brand-300 text-xl mt-1">&#10145;</span><div><strong class="block text-lg text-white mb-1">CHẬM lại để kiểm chứng</strong><p class="text-brand-100 text-sm">Chủ động tìm số hotline chính thức trên Google để gọi hỏi lại, hoặc hỏi ý kiến người thân/cảnh sát khu vực trước khi quyết định.</p></div></li>
                     </ul>
                 </div>
             </div>
-
-            <!-- Công cụ và thói quen bảo mật -->
-            <div class="mt-12 bg-white rounded-2xl p-8 border border-slate-200 shadow-xl">
+            
+            <!-- Tech Habits 2026 -->
+            <div class="mt-12 bg-white rounded-2xl p-8 border border-slate-200 shadow-xl text-slate-900">
                 <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold text-slate-900">Thói Quen & Công Cụ Bảo Mật Chủ Động</h3>
-                    <p class="text-slate-600 mt-2">Nâng cao lớp phòng thủ kỹ thuật cho các tài khoản của bạn theo chuẩn mới nhất</p>
+                    <h3 class="text-2xl font-bold text-slate-900">Thói Quen Công Nghệ Thiết Yếu</h3>
+                    <p class="text-slate-600 mt-2">Nâng cao lớp phòng thủ kỹ thuật cho thiết bị của bạn theo chuẩn mới nhất</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div class="text-center">
                         <div class="text-5xl mb-4 text-brand-600">&#129488;</div>
-                        <h4 class="text-lg font-bold text-slate-800 mb-2">Cập Nhật Sinh Trắc Học</h4>
-                        <p class="text-xs text-slate-600">Tuyệt đối tuân thủ cài đặt khuôn mặt (Biometrics) trên App ngân hàng bằng CCCD gắn chip. Đây là lá chắn thép chặn kẻ gian tẩu tán dòng tiền lớn.</p>
+                        <h4 class="text-lg font-bold text-slate-800 mb-2">Cài Sinh Trắc Học</h4>
+                        <p class="text-xs text-slate-600">Luôn cập nhật khuôn mặt trên App ngân hàng bằng CCCD gắn chip để chặn kẻ gian tẩu tán tiền số lượng lớn.</p>
                     </div>
                     <div class="text-center border-t md:border-t-0 md:border-l border-slate-200 pt-6 md:pt-0 pl-0 md:pl-6">
                         <div class="text-5xl mb-4">&#128274;</div>
-                        <h4 class="text-lg font-bold text-slate-800 mb-2">Bật Xác Thực 2 Lớp (2FA)</h4>
-                        <p class="text-xs text-slate-600">Luôn bật tính năng bảo mật 2 lớp cho mạng xã hội và Email (khuyến khích dùng App Authenticator thay vì SMS).</p>
+                        <h4 class="text-lg font-bold text-slate-800 mb-2">Bật 2FA Mọi Nơi</h4>
+                        <p class="text-xs text-slate-600">Bật xác thực 2 bước cho mạng xã hội (Facebook, Zalo) và Email. Khuyến khích dùng App Authenticator thay vì SMS.</p>
                     </div>
                     <div class="text-center border-t lg:border-t-0 lg:border-l border-slate-200 pt-6 lg:pt-0 pl-0 lg:pl-6">
                         <div class="text-5xl mb-4">&#128269;</div>
-                        <h4 class="text-lg font-bold text-slate-800 mb-2">Kiểm Tra Mức Độ Tín Nhiệm</h4>
-                        <p class="text-xs text-slate-600">Dùng <a href="https://tinnhiemmang.vn" target="_blank" class="text-brand-600 font-semibold hover:underline">tinnhiemmang.vn</a> để tra cứu tài khoản ngân hàng, web, số điện thoại lừa đảo trước khi chuyển tiền.</p>
+                        <h4 class="text-lg font-bold text-slate-800 mb-2">Tra Cứu Tín Nhiệm</h4>
+                        <p class="text-xs text-slate-600">Luôn dùng <a href="https://tinnhiemmang.vn" target="_blank" class="text-brand-600 font-semibold hover:underline">tinnhiemmang.vn</a> để kiểm tra tài khoản ngân hàng, web lạ trước khi tiến hành giao dịch.</p>
                     </div>
                     <div class="text-center border-t md:border-t-0 md:border-l lg:border-l border-slate-200 pt-6 md:pt-0 pl-0 md:pl-6 lg:pl-6">
                         <div class="text-5xl mb-4 text-alert-500">&#128242;</div>
-                        <h4 class="text-lg font-bold text-slate-800 mb-2">Tắt Quyền Trợ Năng</h4>
-                        <p class="text-xs text-slate-600">Kiểm tra ngay điện thoại Android: Vào Cài đặt > Trợ năng (Accessibility) và TẮT quyền này cho tất cả các app không cần thiết.</p>
+                        <h4 class="text-lg font-bold text-slate-800 mb-2">Tắt "Trợ Năng"</h4>
+                        <p class="text-xs text-slate-600">Với máy Android: Vào Cài đặt > Trợ năng (Accessibility) và TUYỆT ĐỐI TẮT quyền này cho tất cả ứng dụng không rõ nguồn gốc.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section: Trình Báo & Khẩn Cấp -->
+    <!-- Emergency Section -->
     <section id="bao-cao" class="py-20 bg-alert-50 border-t border-alert-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12 text-center">
                 <h2 class="text-3xl font-bold text-alert-900 mb-4">&#128680; Xử Lý Khẩn Cấp & Trình Báo</h2>
-                <p class="text-lg text-alert-700 max-w-3xl mx-auto">
-                    Nếu bạn nghi ngờ mình đã bị lừa đảo, hãy <strong>BÌNH TĨNH</strong> và thực hiện ngay các bước sau. Thời gian là yếu tố quyết định.
-                </p>
+                <p class="text-lg text-alert-700 max-w-3xl mx-auto">Nếu bạn nghi ngờ mình đã bị lừa đảo, hãy <strong>BÌNH TĨNH</strong> và thực hiện ngay các bước sau. Thời gian là vàng.</p>
             </div>
-
-            <!-- Quy trình 3 bước khẩn cấp -->
             <div class="flex flex-col md:flex-row justify-center gap-6 mb-16">
                 <div class="bg-white p-6 rounded-xl border border-alert-200 shadow-sm flex-1 relative overflow-hidden">
                     <div class="absolute -right-4 -top-4 text-6xl opacity-10">&#10112;</div>
-                    <h3 class="text-lg font-bold text-alert-800 mb-2">Bước 1: Cắt Đứt Nguồn Tiền</h3>
-                    <p class="text-sm text-slate-600">Lập tức gọi lên tổng đài ngân hàng (số in sau mặt thẻ) để yêu cầu <strong>Khóa thẻ</strong> và <strong>Khóa tài khoản e-banking</strong> khẩn cấp.</p>
+                    <h3 class="text-lg font-bold text-alert-800 mb-2">Bước 1: Chặn Dòng Tiền</h3>
+                    <p class="text-sm text-slate-600">Gọi ngay số hotline in sau mặt thẻ ATM để yêu cầu nhân viên ngân hàng <strong>khóa thẻ và khóa tài khoản E-banking</strong> khẩn cấp.</p>
                 </div>
                 <div class="bg-white p-6 rounded-xl border border-alert-200 shadow-sm flex-1 relative overflow-hidden">
                     <div class="absolute -right-4 -top-4 text-6xl opacity-10">&#10113;</div>
-                    <h3 class="text-lg font-bold text-alert-800 mb-2">Bước 2: Thu Thập Bằng Chứng</h3>
-                    <p class="text-sm text-slate-600">Tuyệt đối không chặn hay xóa tin nhắn ngay. Hãy <strong>chụp ảnh màn hình</strong> toàn bộ lịch sử trò chuyện, số điện thoại, biên lai chuyển tiền, link website.</p>
+                    <h3 class="text-lg font-bold text-alert-800 mb-2">Bước 2: Giữ Bằng Chứng</h3>
+                    <p class="text-sm text-slate-600">TUYỆT ĐỐI KHÔNG xóa tin nhắn. Hãy <strong>chụp màn hình</strong> toàn bộ lịch sử chat, biên lai, số tài khoản kẻ gian và đường link giả mạo.</p>
                 </div>
                 <div class="bg-white p-6 rounded-xl border border-alert-200 shadow-sm flex-1 relative overflow-hidden">
                     <div class="absolute -right-4 -top-4 text-6xl opacity-10">&#10114;</div>
-                    <h3 class="text-lg font-bold text-alert-800 mb-2">Bước 3: Trình Báo Cơ Quan</h3>
-                    <p class="text-sm text-slate-600">Sử dụng các kênh liên lạc chính thức bên dưới để báo cáo sự việc cho cơ quan chức năng để được hỗ trợ và ngăn chặn kẻ gian.</p>
+                    <h3 class="text-lg font-bold text-alert-800 mb-2">Bước 3: Trình Báo Ngay</h3>
+                    <p class="text-sm text-slate-600">Liên hệ ngay với các đường dây nóng của Quốc gia hoặc mang hồ sơ ra trụ sở Công an phường/xã gần nhất.</p>
                 </div>
             </div>
-
-            <!-- Các kênh liên lạc Quốc Gia -->
+            
             <h3 class="text-2xl font-bold text-center text-slate-900 mb-8">Danh Bạ Khẩn Cấp Quốc Gia</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                <!-- Kênh 1: 156 (Bộ TT&TT) -->
                 <div class="bg-white p-6 rounded-2xl border-2 border-brand-500 shadow-md hover:shadow-lg transition-shadow">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="bg-brand-100 p-3 rounded-full text-brand-600 text-2xl">&#128222;</div>
@@ -410,10 +255,8 @@
                             <div class="text-2xl font-black text-brand-600">Tổng Đài 156</div>
                         </div>
                     </div>
-                    <p class="text-sm text-slate-600">Đầu số tiếp nhận phản ánh về cuộc gọi rác, cuộc gọi có dấu hiệu lừa đảo, tin nhắn rác (Miễn phí cước gọi).</p>
+                    <p class="text-sm text-slate-600">Tiếp nhận phản ánh về cuộc gọi rác, cuộc gọi/tin nhắn có dấu hiệu lừa đảo, giả danh (Miễn phí cước).</p>
                 </div>
-
-                <!-- Kênh 2: 113 (Cảnh sát) -->
                 <div class="bg-white p-6 rounded-2xl border border-alert-200 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
                     <div class="absolute top-0 right-0 bg-alert-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">Khẩn cấp</div>
                     <div class="flex items-center gap-4 mb-4">
@@ -423,10 +266,8 @@
                             <div class="text-2xl font-black text-alert-600">Tổng Đài 113</div>
                         </div>
                     </div>
-                    <p class="text-sm text-slate-600">Gọi ngay khi phát hiện hành vi phạm tội đang diễn ra, hoặc bị đe dọa tính mạng, tống tiền trực tiếp.</p>
+                    <p class="text-sm text-slate-600">Gọi ngay khi phát hiện hành vi phạm tội đang diễn ra, bị tống tiền, hoặc bị đe dọa đến tính mạng.</p>
                 </div>
-
-                <!-- Kênh 3: 111 (Trẻ em) -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="bg-purple-100 p-3 rounded-full text-purple-600 text-2xl">&#128106;</div>
@@ -435,22 +276,18 @@
                             <div class="text-2xl font-black text-purple-600">Tổng Đài 111</div>
                         </div>
                     </div>
-                    <p class="text-sm text-slate-600">Báo cáo các hành vi xâm hại, bạo lực mạng, hoặc lừa đảo nhắm vào trẻ em (như lừa tuyển mẫu nhí).</p>
+                    <p class="text-sm text-slate-600">Báo cáo các hành vi xâm hại mạng, dọa nạt học sinh, hoặc lừa đảo nhắm vào trẻ em (như tuyển mẫu nhí).</p>
                 </div>
-
-                <!-- Kênh 4: Tín Nhiệm Mạng (NCSC) -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="bg-slate-100 p-3 rounded-full text-brand-600 text-2xl">&#128269;</div>
                         <div>
-                            <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Tra Cứu & Báo Cáo Lừa Đảo</div>
+                            <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Tra Cứu & Báo Cáo Website</div>
                             <a href="https://tinnhiemmang.vn" target="_blank" class="text-lg font-bold text-slate-800 hover:text-brand-600">tinnhiemmang.vn</a>
                         </div>
                     </div>
-                    <p class="text-sm text-slate-600">Hệ sinh thái Tín nhiệm mạng của NCSC. Chuyên dùng để tra cứu nhanh độ an toàn của số tài khoản, số điện thoại, website lừa đảo và gửi báo cáo sự cố.</p>
+                    <p class="text-sm text-slate-600">Trang của Cục An toàn thông tin. Dùng để tra cứu độ an toàn của STK, SĐT, và nộp báo cáo website lừa đảo.</p>
                 </div>
-
-                <!-- Kênh 5: Cổng Dịch vụ công BCA -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="bg-blue-100 p-3 rounded-full text-blue-700 text-2xl">&#128187;</div>
@@ -459,10 +296,8 @@
                             <a href="https://dichvucong.bocongan.gov.vn" target="_blank" class="text-lg font-bold text-slate-800 hover:text-blue-700">Cổng DVC Bộ Công An</a>
                         </div>
                     </div>
-                    <p class="text-sm text-slate-600">Nộp đơn trình báo tội phạm mạng, lừa đảo chiếm đoạt tài sản trực tuyến mà không cần đến trực tiếp trụ sở (cần có tài khoản VNeID).</p>
+                    <p class="text-sm text-slate-600">Nộp đơn trình báo lừa đảo chiếm đoạt tài sản trực tuyến ngay tại nhà (yêu cầu có tài khoản VNeID).</p>
                 </div>
-
-                <!-- Kênh 6: Cơ quan Công an (Trực tiếp) -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="bg-slate-100 p-3 rounded-full text-slate-600 text-2xl">&#127974;</div>
@@ -471,9 +306,8 @@
                             <div class="text-lg font-bold text-slate-800">Cơ quan Công an</div>
                         </div>
                     </div>
-                    <p class="text-sm text-slate-600">Mang theo CCCD và toàn bộ bằng chứng (sao kê, ảnh chụp tin nhắn in ra giấy) đến: Công an Xã/Phường nơi cư trú hoặc Phòng PA05 cấp Tỉnh.</p>
+                    <p class="text-sm text-slate-600">Mang CCCD và toàn bộ bằng chứng (in ra giấy) đến: Công an Phường/Xã nơi cư trú hoặc Phòng PA05 cấp Tỉnh.</p>
                 </div>
-
             </div>
         </div>
     </section>
@@ -487,16 +321,16 @@
                         <span class="text-xl text-brand-500">&#128272;</span>
                         <span class="font-bold text-lg text-white">Lá Chắn Số</span>
                     </div>
-                    <p class="text-sm">&copy; 2024 Dự án nâng cao nhận thức an toàn thông tin.</p>
+                    <p class="text-sm">&copy; 2026 Dự án nâng cao nhận thức an toàn thông tin.</p>
                 </div>
                 <div class="text-center md:text-right text-xs text-slate-500 max-w-sm">
-                    <p>Thông tin trên trang web mang tính chất giáo dục cộng đồng. Luôn tuân thủ hướng dẫn từ các cơ quan chức năng nhà nước.</p>
+                    <p>Thông tin mang tính giáo dục cộng đồng. Trong tình huống khẩn cấp, vui lòng tuân thủ hướng dẫn trực tiếp từ cơ quan Công an.</p>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Add to Home Screen Banner (A2HS) -->
+    <!-- A2HS Banner -->
     <div id="install-banner" class="fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4 transform translate-y-full transition-transform duration-500 z-50 flex flex-col sm:flex-row items-center justify-between gap-4 hidden">
         <div class="flex items-center gap-3">
             <span class="text-3xl bg-brand-50 p-2 rounded-lg">&#128241;</span>
@@ -511,18 +345,13 @@
         </div>
     </div>
 
-    <!-- AI Chatbot Widget -->
+    <!-- Chatbot Widget -->
     <div id="ai-chat-widget" class="fixed bottom-6 right-6 z-[60]">
-        <!-- Chat Button (Floating Action Button) -->
         <button id="chat-toggle-btn" class="bg-gradient-to-r from-brand-600 to-brand-500 text-white rounded-full p-4 shadow-[0_10px_25px_-5px_rgba(14,165,233,0.5)] hover:scale-110 transition-transform duration-300 flex items-center justify-center border-2 border-white">
-            <span class="text-3xl drop-shadow-md">&#129302;</span> <!-- Robot Icon -->
+            <span class="text-3xl drop-shadow-md">&#129302;</span>
             <span class="absolute -top-2 -right-2 bg-alert-500 text-white text-xs font-bold px-2 py-1 rounded-full animate-pulse border-2 border-white">AI</span>
         </button>
-
-        <!-- Chat Window -->
         <div id="chat-window" class="hidden absolute bottom-20 right-0 w-[340px] sm:w-[400px] bg-white rounded-2xl shadow-2xl border border-slate-200 flex-col overflow-hidden origin-bottom-right transition-all duration-300 transform scale-95 opacity-0">
-            
-            <!-- Header -->
             <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-4 flex justify-between items-center shadow-md z-10">
                 <div class="flex items-center gap-3">
                     <div class="bg-white/20 p-2 rounded-full"><span class="text-xl">&#128680;</span></div>
@@ -533,19 +362,14 @@
                 </div>
                 <button id="chat-close-btn" class="text-slate-300 hover:text-white text-2xl transition-colors focus:outline-none">&#10005;</button>
             </div>
-
-            <!-- Messages Area -->
             <div id="chat-messages" class="p-4 h-[380px] overflow-y-auto flex flex-col gap-4 bg-slate-50 custom-scrollbar">
-                <!-- Initial Welcome Message -->
                 <div class="flex gap-2">
                     <div class="text-2xl mt-1">&#129302;</div>
                     <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 text-sm text-slate-700 shadow-sm">
-                        Xin chào! Tôi là Trợ lý AI của Lá Chắn Số. Bạn có đang gặp rắc rối hay nghi ngờ bị lừa đảo không? Hãy mô tả ngắn gọn (ví dụ: <strong>"có người xưng công an gọi", "lỡ bấm link", "báo trúng thưởng"</strong>), tôi sẽ tư vấn khẩn cấp ngay!
+                        Xin chào! Tôi là Trợ lý AI. Bạn có đang gặp rắc rối hay nghi ngờ lừa đảo không? Hãy mô tả ngắn gọn (ví dụ: <strong>"có người xưng công an gọi", "lỡ bấm tải app lạ"</strong>), tôi sẽ tư vấn khẩn cấp!
                     </div>
                 </div>
             </div>
-
-            <!-- Input Area -->
             <div class="p-3 bg-white border-t border-slate-200 flex gap-2 items-center">
                 <input type="text" id="chat-input" placeholder="Nhập tình huống hoặc từ khóa..." class="flex-1 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50 transition-all">
                 <button id="chat-send-btn" class="bg-brand-600 text-white p-2.5 rounded-xl hover:bg-brand-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
@@ -555,299 +379,206 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- Javascript -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- Navigation Logic ---
+            // Mobile Menu
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            document.querySelectorAll('#mobile-menu a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            // Close mobile menu on link click
-            document.querySelectorAll('#mobile-menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-
-            // --- Chart.js Implementations ---
+            // Charts Setup
             Chart.defaults.font.family = 'Inter, system-ui, sans-serif';
-            Chart.defaults.color = '#64748b'; // slate-500
+            Chart.defaults.color = '#64748b'; 
 
-            // 1. Trend Chart (Line) - Cập nhật dữ liệu 2025
-            const ctxTrend = document.getElementById('trendChart').getContext('2d');
-            new Chart(ctxTrend, {
+            new Chart(document.getElementById('trendChart').getContext('2d'), {
                 type: 'line',
                 data: {
                     labels: ['2021', '2022', '2023', '2024', '2025'],
-                    datasets: [{
-                        label: 'Số vụ báo cáo (nghìn vụ)',
-                        data: [5.8, 9.5, 15.2, 21.5, 28.7],
-                        borderColor: '#0ea5e9', // brand-500
-                        backgroundColor: 'rgba(14, 165, 233, 0.1)',
-                        borderWidth: 3,
-                        pointBackgroundColor: '#0284c7',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: '#0284c7',
-                        fill: true,
-                        tension: 0.4 // Smooth curves
-                    }]
+                    datasets: [{ label: 'Số vụ báo cáo (nghìn vụ)', data: [5.8, 9.5, 15.2, 21.5, 28.7], borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', borderWidth: 3, pointBackgroundColor: '#0284c7', pointBorderColor: '#fff', fill: true, tension: 0.4 }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false, // Important for custom container sizing
-                    plugins: {
-                        legend: { position: 'top' },
-                        tooltip: {
-                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                            padding: 10,
-                            titleFont: { size: 14 },
-                            bodyFont: { size: 13 }
-                        }
-                    },
-                    scales: {
-                        y: { beginAtZero: true, grid: { borderDash: [5, 5] } },
-                        x: { grid: { display: false } }
-                    }
-                }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true, grid: { borderDash: [5, 5] } }, x: { grid: { display: false } } } }
             });
 
-            // 2. Demographic Chart (Doughnut)
-            const ctxDemo = document.getElementById('demographicChart').getContext('2d');
-            new Chart(ctxDemo, {
+            new Chart(document.getElementById('demographicChart').getContext('2d'), {
                 type: 'doughnut',
                 data: {
                     labels: ['Người cao tuổi (>60)', 'Gen Z & SV (18-25)', 'Trung niên (40-60)', 'Trẻ em (<18)', 'Khác'],
-                    datasets: [{
-                        data: [32, 35, 20, 10, 3], // Cập nhật Gen Z tăng lên do bị lừa việc làm & vay online
-                        backgroundColor: [
-                            '#ef4444', // Red 
-                            '#f97316', // Orange
-                            '#0ea5e9', // Blue
-                            '#8b5cf6', // Purple
-                            '#cbd5e1'  // Slate
-                        ],
-                        borderWidth: 2,
-                        borderColor: '#ffffff'
-                    }]
+                    datasets: [{ data: [32, 35, 20, 10, 3], backgroundColor: ['#ef4444', '#f97316', '#0ea5e9', '#8b5cf6', '#cbd5e1'], borderWidth: 2, borderColor: '#ffffff' }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '65%', // Create the doughnut hole
-                    plugins: {
-                        legend: { position: 'right' },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return ' ' + context.label + ': ' + context.parsed + '%';
-                                }
-                            }
-                        }
-                    }
-                }
+                options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'right' } } }
             });
 
-            // --- Interactive Scam Typology Logic ---
-            
-            // Data Object representing 24 Scam Types (Updated with 'prevention')
+            // 24 Scams Data (Detailed)
             const scamData = {
-                'impersonation_police': {
-                    title: '1. Giả Danh Công An, VKS, Tòa Án',
-                    icon: '&#128110;',
-                    description: 'Gọi điện thoại tự xưng là cơ quan chức năng, thông báo nạn nhân liên quan đến rửa tiền, ma túy, vi phạm giao thông.',
-                    mechanism: ['Dọa nạt gây áp lực tâm lý mạnh, yêu cầu giữ bí mật.', 'Gửi lệnh bắt giam, giấy triệu tập giả mạo qua Zalo.', 'Yêu cầu chuyển tiền vào "tài khoản tạm giữ" để chứng minh sự trong sạch.'],
-                    redFlags: ['Cơ quan chức năng KHÔNG làm việc, gửi giấy tờ qua mạng xã hội.', 'KHÔNG bao giờ yêu cầu chuyển tiền vào tài khoản cá nhân/tạm giữ.'],
-                    prevention: ['Tuyệt đối không làm việc qua điện thoại. Yêu cầu gửi giấy mời bằng văn bản về tận nhà hoặc trụ sở Công an.', 'Ngắt máy ngay lập tức, không đôi co với đối tượng.']
+                'impersonation_police': { 
+                    title: '1. Giả Danh Công An, VKS, Tòa Án', icon: '&#128110;', 
+                    description: 'Kẻ gian gọi điện tự xưng là cán bộ điều tra, thông báo bạn liên quan đến đường dây buôn ma túy, rửa tiền, hoặc vi phạm giao thông. Mục đích là tạo sự hoảng loạn tột độ.', 
+                    mechanism: ['Đọc đúng thông tin cá nhân của bạn để tạo uy tín.', 'Yêu cầu "giữ bí mật tuyệt đối", cấm kể với người nhà.', 'Gửi Lệnh Bắt Giam giả mạo có mộc đỏ qua Zalo.', 'Ép tải app "Bộ Công An" giả mạo hoặc bắt chuyển tiền vào "Tài khoản tạm giữ" để xác minh sự trong sạch.'], 
+                    redFlags: ['Công an thật KHÔNG BAO GIỜ làm việc, lấy lời khai qua điện thoại hay Zalo.', 'Cơ quan nhà nước KHÔNG có "Tài khoản tạm giữ cá nhân" nào để bắt người dân chuyển tiền.'], 
+                    prevention: ['Ngắt máy ngay lập tức, không đôi co giải thích.', 'Nếu lo lắng, hãy ra trực tiếp trụ sở Công an phường gần nhất để hỏi rõ.'] 
                 },
-                'job_scam': {
-                    title: '2. Tuyển CTV Online / Việc Nhẹ Lương Cao',
-                    icon: '&#128188;',
-                    description: 'Mời làm cộng tác viên chốt đơn Shopee, Lazada, Tiktok, đánh giá sản phẩm với hoa hồng 10-20%.',
-                    mechanism: ['Giao nhiệm vụ nhỏ (100k - 200k) và trả tiền ngay để tạo niềm tin.', 'Yêu cầu nạp số tiền lớn hơn để làm nhiệm vụ cấp cao.', 'Báo lỗi hệ thống, yêu cầu nạp thêm tiền để rút, sau đó chặn liên lạc.'],
-                    redFlags: ['Tuyển dụng qua Telegram/Zalo, không có hợp đồng.', 'Phải nạp tiền túi trước để được nhận việc/làm nhiệm vụ.'],
-                    prevention: ['Nhớ kỹ nguyên tắc: "Việc gì bắt nạp tiền trước thì 100% là lừa đảo".', 'Không tham gia các hội nhóm làm nhiệm vụ trên Telegram/Zalo.']
+                'job_scam': { 
+                    title: '2. Tuyển CTV Việc Nhẹ Lương Cao', icon: '&#128188;', 
+                    description: 'Đánh vào tâm lý muốn kiếm thêm thu nhập tại nhà. Quảng cáo tuyển người "thả tim Tiktok", "đánh giá Google", "chốt đơn Shopee ảo" với thù lao hấp dẫn trả ngay lập tức.', 
+                    mechanism: ['Mồi nhử: Cho làm nhiệm vụ nhỏ (100k) và trả hoa hồng thật để tạo niềm tin.', 'Đưa vào nhóm Telegram kín có nhiều "chim mồi" liên tục khoe nhận tiền triệu.', 'Yêu cầu nạp số tiền lớn để làm "nhiệm vụ VIP".', 'Báo lỗi hệ thống (sai cú pháp, thao tác chậm), bắt nạp thêm tiền để mở băng tài khoản rồi chặn liên lạc.'], 
+                    redFlags: ['Tuyển dụng không cần phỏng vấn, trao đổi toàn bộ qua Telegram.', 'Quy tắc bất di bất dịch: Việc gì bắt nạp tiền túi ra trước để được làm thì 100% là lừa đảo.'], 
+                    prevention: ['Thoát ngay các nhóm Telegram mời gọi làm nhiệm vụ ảo.', 'Tìm việc làm qua các nền tảng tuyển dụng uy tín (TopCV, VietnamWorks).'] 
                 },
-                'investment': {
-                    title: '3. Lừa Đảo Đầu Tư Tài Chính, Tiền Ảo',
-                    icon: '&#128200;',
-                    description: 'Mời gọi tham gia các sàn giao dịch ngoại hối (Forex), chứng khoán quốc tế, tiền ảo với cam kết "bao lời", "chuyên gia đọc lệnh".',
-                    mechanism: ['Khoe khoang sự giàu có trên MXH để thu hút.', 'Ban đầu cho thắng nhỏ và rút được tiền.', 'Khi nạp tiền lớn, sàn báo lỗi, yêu cầu đóng thuế/phí bảo hiểm rồi đánh sập sàn.'],
-                    redFlags: ['Cam kết lợi nhuận phi lý (20-30%/tháng) không rủi ro.', 'Giao dịch qua các app lạ, không có trên App Store/Google Play chính thức.'],
-                    prevention: ['Không tin vào "lợi nhuận cao - rủi ro thấp".', 'Chỉ đầu tư qua các kênh, công ty chứng khoán chính thống được pháp luật Việt Nam cấp phép.']
+                'investment': { 
+                    title: '3. Lừa Đảo Đầu Tư Tiền Ảo, Đa Cấp', icon: '&#128200;', 
+                    description: 'Kẻ gian đóng giả là "doanh nhân thành đạt", "chuyên gia đọc lệnh" trên MXH. Mời chào tham gia sàn giao dịch ngoại hối (Forex), tiền ảo (Crypto) cam kết lợi nhuận khủng.', 
+                    mechanism: ['Thường xuyên đăng ảnh siêu xe, xấp tiền đô, triết lý làm giàu.', 'Cam kết "Bao cháy tài khoản", "Vốn 1 lời 10".', 'Cho nạn nhân xem bảng lãi ảo trên ứng dụng lừa đảo tự tạo.', 'Khi nạn nhân muốn rút tiền thật, sàn sẽ bắt đóng "Thuế thu nhập", "Phí xác minh" rồi đánh sập app.'], 
+                    redFlags: ['Lợi nhuận cam kết cao bất thường (20-30%/tháng) mà không có rủi ro.', 'Giao dịch qua các app lạ, tải qua file APK (Android) hoặc cấp quyền doanh nghiệp (iOS).'], 
+                    prevention: ['Tuyệt đối không tin vào "chuyên gia đọc lệnh" trên mạng.', 'Chỉ đầu tư qua các công ty chứng khoán được Ủy ban Chứng khoán Nhà nước cấp phép.'] 
                 },
-                'romance': {
-                    title: '4. Bẫy Tình Cảm & Gửi Quà Ngoại',
-                    icon: '&#128148;',
-                    description: 'Tạo tài khoản giả (phi công, bác sĩ, lính Mỹ...) kết bạn, hẹn hò online, hứa hẹn gửi quà giá trị lớn về Việt Nam.',
-                    mechanism: ['Xây dựng tình cảm trong thời gian dài (vài tuần/tháng).', 'Thông báo gửi thùng quà chứa hàng triệu USD, trang sức.', 'Có người giả danh Hải quan gọi điện yêu cầu đóng phí thông quan, tiền phạt.'],
-                    redFlags: ['Chưa từng gặp mặt hoặc video call (luôn lấy lý do hỏng camera).', 'Yêu cầu chuyển tiền phí vào tài khoản cá nhân tại Việt Nam.'],
-                    prevention: ['Cảnh giác với những mối quan hệ trên mạng tiến triển quá nhanh.', 'Tuyệt đối KHÔNG chuyển tiền đóng các loại phí nhận quà từ nước ngoài.']
+                'deepfake': { 
+                    title: '4. Gọi Video Deepfake Mượn Tiền', icon: '&#128253;', 
+                    description: 'Sử dụng trí tuệ nhân tạo (AI) để cắt ghép khuôn mặt và sao chép giọng nói của người thân, sếp, bạn bè để gọi video call mượn tiền khẩn cấp.', 
+                    mechanism: ['Thu thập video/giọng nói nạn nhân đăng công khai trên Tiktok, Facebook.', 'Hack tài khoản chat của nạn nhân, nhắn tin cho danh bạ mượn tiền (lý do: nằm viện, đóng học phí).', 'Khi bạn bè gọi video xác nhận, chúng phát một đoạn video Deepfake dài vài giây rồi tắt nhanh bảo "mạng lag".'], 
+                    redFlags: ['Khuôn mặt trong video bị đơ cứng, màu sắc nhợt nhạt, mờ ảo.', 'Giọng nói đều đều, không có cảm xúc, âm thanh không khớp với khẩu hình miệng.', 'STK nhận tiền mang tên người lạ (viện cớ mượn tài khoản).'], 
+                    prevention: ['Khi ai đó mượn tiền qua mạng, hãy GỌI ĐIỆN THOẠI THOẠI (bằng mạng viễn thông thông thường) để xác nhận.', 'Yêu cầu người gọi đưa tay lên vẫy trước mặt (Deepfake thường bị lỗi khi có vật thể che mặt).'] 
                 },
-                'deepfake': {
-                    title: '5. Cuộc Gọi Video Deepfake/Deepvoice',
-                    icon: '&#128253;',
-                    description: 'Sử dụng AI để ghép mặt và giọng nói của người thân, bạn bè, cấp trên, gọi video call để mượn tiền.',
-                    mechanism: ['Hack tài khoản MXH hoặc thu thập hình ảnh/giọng nói nạn nhân trên mạng.', 'Tạo video ngắn giả mạo, gọi điện bằng video call.', 'Viện lý do khẩn cấp (nằm viện, cần gấp) để yêu cầu chuyển tiền ngay.'],
-                    redFlags: ['Cuộc gọi video thường rất ngắn, chất lượng kém, giật lag, khuôn mặt cứng đơ.', 'Âm thanh không khớp với khẩu hình miệng.'],
-                    prevention: ['Nếu người thân nhắn tin/gọi video mượn tiền, hãy GỌI ĐIỆN THOẠI THOẠI (số điện thoại truyền thống) để xác nhận lại.', 'Yêu cầu người gọi đưa tay lên vẫy trước mặt hoặc hỏi một câu hỏi riêng tư.']
+                'fake_app': { 
+                    title: '5. Lừa Cài App Giả Mạo (Thuế, VNeID)', icon: '&#128242;', 
+                    description: 'Chiêu trò tinh vi nhất hiện nay. Kẻ gian đóng giả công an khu vực, cán bộ thuế yêu cầu người dân cài đặt ứng dụng Dịch vụ công, VNeID để chuẩn hóa thông tin.', 
+                    mechanism: ['Gọi điện đe dọa CCCD bị lỗi, yêu cầu cài app qua một đường link lạ (không phải Google Play).', 'Hướng dẫn nạn nhân cấp quyền "Trợ năng" (Accessibility) cho ứng dụng.', 'App sẽ chạy ngầm, theo dõi màn hình, tự động đọc mã OTP và truy cập app ngân hàng để rút sạch tiền mà nạn nhân không hề hay biết.'], 
+                    redFlags: ['Cơ quan nhà nước KHÔNG BAO GIỜ gửi link lạ yêu cầu tải app định dạng file ".APK".', 'Bất kỳ ứng dụng nào yêu cầu cấp quyền "Trợ năng / Accessibility" đều cực kỳ nguy hiểm.'], 
+                    prevention: ['CHỈ tải ứng dụng từ cửa hàng chính thức (Google Play Store, Apple App Store).', 'Tắt ngay quyền Trợ năng trên điện thoại Android nếu phát hiện có app lạ đang dùng.'] 
                 },
-                'child_emergency': {
-                    title: '6. Giả Danh Giáo Viên Báo "Con Đang Cấp Cứu"',
-                    icon: '&#128657;',
-                    description: 'Gọi điện cho phụ huynh, tự xưng là giáo viên/nhân viên y tế báo tin con bị tai nạn ở trường đang cấp cứu cần tiền mổ gấp.',
-                    mechanism: ['Nắm rõ thông tin tên con, tên phụ huynh, trường lớp.', 'Tạo âm thanh hỗn loạn (tiếng còi cứu thương, tiếng y tá) làm nền.', 'Hối thúc chuyển tiền ngay vào tài khoản bác sĩ/giám đốc bệnh viện để làm thủ tục.'],
-                    redFlags: ['Bệnh viện không bao giờ yêu cầu chuyển khoản trước mới cấp cứu người bệnh nặng.', 'Tài khoản nhận tiền là tài khoản cá nhân.'],
-                    prevention: ['Giữ bình tĩnh. Lập tức cúp máy và gọi điện cho giáo viên chủ nhiệm hoặc số điện thoại của nhà trường.', 'Nếu không gọi được trường, hãy gọi trực tiếp vào đường dây nóng của bệnh viện được nhắc đến.']
+                'child_emergency': { 
+                    title: '6. Kịch Bản "Con Đang Cấp Cứu"', icon: '&#128657;', 
+                    description: 'Đánh vào tâm lý hoảng loạn và tình phụ tử. Kẻ gian tự xưng là giáo viên chủ nhiệm hoặc bác sĩ gọi điện báo con bạn bị tai nạn chấn thương sọ não, cần tiền mổ gấp.', 
+                    mechanism: ['Nắm rất rõ họ tên con, tên cha mẹ, và tên trường lớp (do lộ lọt dữ liệu).', 'Tạo âm thanh nền cực kỳ chân thực (tiếng còi xe cứu thương, tiếng y tá la hét).', 'Hối thúc cha mẹ phải chuyển khoản ngay vài chục triệu vào số tài khoản cá nhân của "bác sĩ" để tạm ứng mổ.'], 
+                    redFlags: ['Quy định ngành y tế: Bệnh viện luôn đặt tính mạng bệnh nhân lên trên hết, không bao giờ bắt ép chuyển khoản tiền trước rồi mới cấp cứu.', 'Tài khoản nhận tiền là tên cá nhân, không phải tên bệnh viện.'], 
+                    prevention: ['Bình tĩnh hít sâu. Cúp máy ngay lập tức.', 'Gọi điện lại bằng số khác cho giáo viên chủ nhiệm, hoặc đường dây nóng chính thức của trường/bệnh viện để xác minh.'] 
                 },
-                'sim_lock': {
-                    title: '7. Dọa Khóa SIM Cục Bộ / Cắt Điện',
-                    icon: '&#128241;',
-                    description: 'Cuộc gọi tự động hoặc người xưng là nhân viên nhà mạng báo SIM sắp bị khóa 2 chiều vì chưa chuẩn hóa thông tin.',
-                    mechanism: ['Yêu cầu nạn nhân cung cấp thông tin cá nhân (CCCD, họ tên).', 'Hướng dẫn nạn nhân thao tác mã lệnh trên điện thoại (thực chất là cú pháp chuyển hướng cuộc gọi).', 'Chiếm đoạt mã OTP gửi về máy để lấy cắp tài khoản ngân hàng.'],
-                    redFlags: ['Nhà mạng chính thống thường gửi tin nhắn SMS có tên định danh (Brandname), không dọa khóa ngay lập tức.', 'Cú pháp bắt đầu bằng **21*... là chuyển hướng cuộc gọi.'],
-                    prevention: ['Chủ động gọi lên tổng đài CSKH của nhà mạng (Viettel 198, MobiFone 18001090...) để kiểm tra.', 'KHÔNG bao giờ soạn các cú pháp lạ trên điện thoại theo hướng dẫn của người lạ.']
+                'sim_lock': { 
+                    title: '7. Dọa Khóa SIM / Chuyển Hướng Cuộc Gọi', icon: '&#128241;', 
+                    description: 'Cuộc gọi tự động hoặc người lạ xưng là tổng đài viên VNPT, Viettel báo số điện thoại của bạn sắp bị khóa 2 chiều do sai thông tin đăng ký.', 
+                    mechanism: ['Hù dọa thuê bao sẽ bị khóa trong vòng 2 tiếng nếu không nâng cấp.', 'Yêu cầu nạn nhân bấm các mã lệnh lạ trên bàn phím điện thoại (Ví dụ: **21*Số_Điện_Thoại_Kẻ_Gian#).', 'Đây thực chất là lệnh "Chuyển hướng cuộc gọi". Khi bật, mã OTP ngân hàng gửi đến máy bạn sẽ bị tự động chuyển tiếp sang máy kẻ lừa đảo.'], 
+                    redFlags: ['Nhà mạng chính thống khi thông báo thường qua tin nhắn SMS có Tên định danh (Brandname), không dùng cuộc gọi dọa nạt.', 'Cú pháp bắt đầu bằng `**21*` là mã lệnh chuyển cuộc gọi của viễn thông.'], 
+                    prevention: ['Tuyệt đối KHÔNG gõ bất kỳ cú pháp lạ nào trên màn hình gọi điện theo lời người lạ.', 'Tự chủ động gọi đến tổng đài CSKH (Viettel: 198, Mobi: 18001090) để kiểm tra tình trạng SIM.'] 
                 },
-                'fake_receipt': {
-                    title: '8. Biên Lai Chuyển Tiền Giả Mạo',
-                    icon: '&#128179;',
-                    description: 'Kẻ gian mua hàng hóa giá trị cao, sử dụng phần mềm tạo biên lai chuyển khoản ngân hàng giả mạo (rất giống thật) đưa cho người bán.',
-                    mechanism: ['Lấy lý do ngân hàng lỗi, khác mạng nên tiền đến chậm.', 'Chìa màn hình/gửi ảnh biên lai báo "Đã chuyển khoản thành công".', 'Hối thúc người bán giao hàng và tẩu thoát.'],
-                    redFlags: ['Tiền chưa thực sự nổ (báo có) vào ứng dụng ngân hàng của người bán.', 'Biên lai có thể sai font chữ, màu sắc nhỏ nếu nhìn kỹ.'],
-                    prevention: ['Chỉ giao hàng khi TIỀN ĐÃ BÁO CÓ trên ứng dụng ngân hàng của chính bạn.', 'Không tin vào ảnh chụp màn hình hay tin nhắn SMS giả mạo biên lai.']
+                'fake_receipt': { 
+                    title: '8. Biên Lai Chuyển Tiền Giả Mạo', icon: '&#128179;', 
+                    description: 'Kẻ gian thường nhắm vào các cửa hàng bán lẻ, người bán hàng online hoặc shipper. Chúng mua hàng và làm giả biên lai chuyển khoản ngân hàng.', 
+                    mechanism: ['Sử dụng các website/app tạo hóa đơn ngân hàng giả (có đầy đủ logo, tên người nhận, số tiền, ngày giờ giống thật 100%).', 'Lấy lý do ngân hàng khác mạng, giao dịch bị treo nên tiền báo chậm.', 'Đưa ảnh chụp màn hình biên lai giả cho người bán xem để lấy hàng rời đi.'], 
+                    redFlags: ['Người mua thường hối thúc, tỏ ra vội vã muốn lấy hàng đi ngay.', 'Ảnh biên lai đôi khi có lỗi nhỏ về font chữ nếu nhìn thật kỹ.'], 
+                    prevention: ['Chỉ giao hàng khi TIỀN ĐÃ BÁO CÓ trực tiếp trên ứng dụng ngân hàng của chính bạn.', 'Không tin vào SMS báo số dư (có thể bị giả mạo), không tin ảnh chụp màn hình.'] 
                 },
-                'fake_app': {
-                    title: '9. Cài Đặt App Giả Mạo (Thuế, VNeID)',
-                    icon: '&#128242;',
-                    description: 'Giả danh cán bộ Thuế, Công an phường hướng dẫn cài đặt ứng dụng Dịch vụ công, VNeID, Thuế điện tử... giả mạo.',
-                    mechanism: ['Gửi đường link lạ tải file .APK (Android) cài đặt vào máy.', 'Ứng dụng giả mạo yêu cầu cấp quyền "Trợ năng" (Accessibility).', 'App sẽ tự động đọc tin nhắn OTP, điều khiển màn hình để lấy trộm tiền trong ngân hàng.'],
-                    redFlags: ['Cơ quan nhà nước KHÔNG bao giờ yêu cầu tải app qua link lạ hoặc file APK.', 'App yêu cầu cấp quyền "Trợ năng" (Accessibility) hoặc "Xem màn hình".'],
-                    prevention: ['CHỈ tải ứng dụng từ cửa hàng chính thức (Google Play, App Store).', 'Tuyệt đối KHÔNG cấp quyền Trợ năng (Accessibility) cho các ứng dụng không rõ nguồn gốc.']
+                'recover_money': { 
+                    title: '9. Dịch Vụ "Lấy Lại Tiền Đã Bị Lừa"', icon: '&#128119;', 
+                    description: 'Lợi dụng tâm lý muốn vớt vát tài sản của những người vừa mới bị lừa đảo (tuyển CTV, đầu tư). Đánh trực diện vào sự tuyệt vọng của nạn nhân.', 
+                    mechanism: ['Chạy quảng cáo Facebook giả danh "Luật sư an ninh mạng", "Cục C50 hỗ trợ thu hồi vốn".', 'Yêu cầu nạn nhân gửi biên lai đã bị lừa để "kiểm tra hệ thống".', 'Báo tin vui là "tiền vẫn còn treo", nhưng yêu cầu nạn nhân phải nộp "Phí bôi trơn", "Phí thuê hacker", "Phí bảo lãnh" để rút tiền về.', 'Tiếp tục lừa vét sạch những đồng tiền cuối cùng của nạn nhân.'], 
+                    redFlags: ['Cam kết lấy lại tiền 100% cực kỳ dễ dàng.', 'Bắt đóng thêm bất kỳ loại phí nào trước khi tiền về tay.'], 
+                    prevention: ['Sự thật phũ phàng: Tiền đã chuyển cho lừa đảo qua mạng thường bị tẩu tán ra nước ngoài, tỷ lệ lấy lại cực thấp.', 'Cơ quan Công an thật KHÔNG BAO GIỜ thu phí giải quyết án, và không làm việc qua Fanpage quảng cáo.'] 
                 },
-                'recover_money': {
-                    title: '10. Dịch Vụ "Lấy Lại Tiền Đã Bị Lừa"',
-                    icon: '&#128119;',
-                    description: 'Lập các trang Facebook giả danh "Cục An ninh mạng", "Luật sư", quảng cáo có khả năng lấy lại tiền cho nạn nhân đã bị lừa đảo.',
-                    mechanism: ['Tiếp cận các nạn nhân đang hoang mang.', 'Yêu cầu đóng "Phí hồ sơ", "Phí bôi trơn hệ thống", "Phí thuê hacker".', 'Tiếp tục lừa nạn nhân lần 2, lần 3 cho đến khi cạn kiệt tài sản.'],
-                    redFlags: ['Yêu cầu chuyển phí trước khi lấy lại tiền.', 'Cơ quan Công an thật KHÔNG thu phí điều tra, không làm việc qua Fanpage dịch vụ.'],
-                    prevention: ['Nếu bị lừa, chỉ có một nơi duy nhất tiếp nhận trình báo là Cơ quan Công an.', 'Bỏ qua ngay các bài quảng cáo dịch vụ lấy lại tiền trên mạng xã hội.']
+                'romance': { 
+                    title: '10. Bẫy Tình Cảm & Quà Ngoại Giao', icon: '&#128148;', 
+                    description: 'Lừa đảo qua mạng xã hội, nhắm vào những người độc thân, phụ nữ nhẹ dạ. Tạo profile hoành tráng (Lính Mỹ đóng quân tại Syria, Bác sĩ Liên Hợp Quốc, Kỹ sư dầu khí).', 
+                    mechanism: ['Kiên nhẫn nhắn tin trò chuyện hàng tháng trời, gọi nhau là "vợ - chồng", vẽ ra tương lai mua nhà tại Việt Nam.', 'Lấy lý do được thưởng một vali chứa hàng triệu USD, vàng thỏi, trang sức nhưng đang ở chiến trường không giữ được, nhờ "vợ" ở VN giữ hộ.', 'Vài ngày sau, một người xưng là "Hải quan sân bay" gọi điện báo lô hàng bị giữ lại, bắt đóng thuế, tiền phạt (từ vài chục đến hàng trăm triệu) vào một tài khoản cá nhân.'], 
+                    redFlags: ['Luôn tìm lý do (hỏng camera, đang trong khu vực quân sự) để từ chối Video Call rõ mặt.', 'Hải quan, Thuế vụ nhà nước KHÔNG yêu cầu người dân chuyển tiền vào số tài khoản cá nhân.'], 
+                    prevention: ['Thức tỉnh: Không ai vừa quen trên mạng chưa từng gặp mặt lại gửi cho bạn hàng chục tỷ đồng.', 'Tuyệt đối không chuyển tiền đóng phí nhận quà, phí hải quan cho người lạ.'] 
                 },
-                'wrong_transfer': {
-                    title: '11. Chuyển Nhầm Tiền Vào Tài Khoản',
-                    icon: '&#128184;',
-                    description: 'Cố ý chuyển một khoản tiền vào tài khoản nạn nhân, sau đó gọi điện báo chuyển nhầm.',
-                    mechanism: ['Kịch bản 1: Yêu cầu chuyển trả lại vào MỘT TÀI KHOẢN KHÁC (thường là tài khoản rửa tiền).', 'Kịch bản 2: Dùng số tiền đó làm bằng chứng vay nặng lãi online, ép trả lãi suất cao.', 'Kịch bản 3: Gửi link giả ngân hàng yêu cầu đăng nhập để hoàn tiền.'],
-                    redFlags: ['Người nhận xưng là nhân viên ngân hàng yêu cầu nhấp vào link.', 'Yêu cầu chuyển trả vào tài khoản KHÔNG KHỚP với tên người gửi ban đầu.'],
-                    prevention: ['Không tự ý chuyển trả tiền lại, đặc biệt là vào một tài khoản khác.', 'Liên hệ trực tiếp tổng đài ngân hàng của bạn để yêu cầu tra soát và xử lý lệnh chuyển nhầm. Không tiêu số tiền đó.']
+                'wrong_transfer': { 
+                    title: '11. Chiêu Trò Chuyển Nhầm Tiền', icon: '&#128184;', 
+                    description: 'Bạn bất ngờ nhận được một khoản tiền (từ vài trăm đến vài triệu) không rõ nguồn gốc. Vài ngày sau, có người gọi điện khóc lóc báo chuyển nhầm và xin lại.', 
+                    mechanism: ['Kịch bản 1: Kẻ gian yêu cầu bạn chuyển trả lại nhưng vào MỘT SỐ TÀI KHOẢN KHÁC (Cấu kết rửa tiền lừa đảo).', 'Kịch bản 2: Sau 1 tháng, kẻ gian dùng ủy nhiệm chi đó làm bằng chứng tố bạn vay nặng lãi qua app, ép trả lãi suất cắt cổ.', 'Kịch bản 3: Gửi cho bạn một đường link lạ, bảo rằng đây là "link tra soát của ngân hàng", yêu cầu bạn đăng nhập để hoàn tiền (thực chất là link lấy cắp mật khẩu).'], 
+                    redFlags: ['Yêu cầu chuyển trả vào tài khoản KHÔNG KHỚP với tên người gửi ban đầu.', 'Gửi link web lạ yêu cầu đăng nhập ngân hàng.'], 
+                    prevention: ['KHÔNG tự ý chuyển trả lại tiền, không xài số tiền đó.', 'Báo ngay cho ngân hàng của bạn để yêu cầu tra soát. Ngân hàng sẽ là trung gian giải quyết an toàn nhất.'] 
                 },
-                'hack_social': {
-                    title: '12. Hack MXH, Mượn Tiền Bạn Bè',
-                    icon: '&#128101;',
-                    description: 'Chiếm đoạt tài khoản Facebook/Zalo của nạn nhân, sau đó nhắn tin cho danh bạ để vay mượn tiền, nhờ nạp thẻ.',
-                    mechanism: ['Nạn nhân bị hack do click link lạ, lộ mật khẩu.', 'Kẻ gian nghiên cứu cách nói chuyện, xưng hô của chủ tài khoản.', 'Nhắn tin mượn tiền với lý do khẩn cấp, đưa số tài khoản ngân hàng tên người khác.'],
-                    redFlags: ['Số tài khoản nhận tiền không mang tên của người bạn đó.', 'Né tránh các cuộc gọi thoại bình thường, chỉ muốn nhắn tin.'],
-                    prevention: ['Bật xác thực 2 lớp (2FA) cho tất cả tài khoản MXH và Email.', 'Luôn gọi điện thoại truyền thống để xác nhận lại khi bạn bè/người thân nhắn tin mượn tiền.']
+                'hack_social': { 
+                    title: '12. Hack MXH, Mượn Tiền Bạn Bè', icon: '&#128101;', 
+                    description: 'Hacker chiếm đoạt tài khoản Facebook, Zalo, Tiktok của nạn nhân do nạn nhân lỡ nhấp vào link độc hại hoặc dùng mật khẩu quá yếu.', 
+                    mechanism: ['Kẻ gian vào đọc lại lịch sử chat để bắt chước cách xưng hô (mày - tao, anh - em).', 'Nhắn tin đồng loạt cho danh bạ mượn tiền với lý do khẩn cấp: "Đang kẹt trong bệnh viện", "Cần thanh toán tiền hàng gấp".', 'Gửi số tài khoản ngân hàng tên người khác (hoặc trùng tên nhưng khác ngân hàng do mua lại CCCD).'], 
+                    redFlags: ['Viện cớ đang họp, hỏng loa để NÉ TRÁNH CÁC CUỘC GỌI THOẠI.', 'Số tài khoản nhận tiền lạ, tên người nhận không khớp với người bạn của mình.'], 
+                    prevention: ['Chậm lại 1 nhịp: Luôn nhấc máy GỌI ĐIỆN THOẠI TRUYỀN THỐNG (SIM) để xác nhận khi ai đó mượn tiền qua chat.', 'Bật xác thực 2 lớp (2FA) cho tất cả mạng xã hội để chống hack.'] 
                 },
-                'cheap_travel': {
-                    title: '13. Lừa Đảo Combo Du Lịch Giá Rẻ',
-                    icon: '&#127958;',
-                    description: 'Lợi dụng các dịp Lễ, Tết, mùa Hè, lập Fanpage giả mạo công ty du lịch bán vé máy bay, phòng khách sạn giá cực rẻ.',
-                    mechanism: ['Chạy quảng cáo giá sốc, yêu cầu chuyển cọc 50-100% để giữ chỗ.', 'Gửi mã đặt chỗ giả mạo (code vé bay ảo chưa thanh toán).', 'Gần ngày đi sẽ khóa page, chặn liên lạc.'],
-                    redFlags: ['Giá rẻ bất thường so với mặt bằng chung.', 'Yêu cầu chuyển tiền vào tài khoản cá nhân thay vì tài khoản công ty.'],
-                    prevention: ['Mua vé máy bay, tour du lịch qua các đại lý, website chính thức của hãng.', 'Sau khi nhận mã Code, hãy chủ động gọi lên tổng đài hãng hàng không/khách sạn để kiểm tra mã hợp lệ.']
+                'loan_app': { 
+                    title: '13. App Vay Tín Dụng Đen Online', icon: '&#128176;', 
+                    description: 'Chạy quảng cáo rầm rộ trên Facebook, Youtube: "Vay 10 triệu giải ngân 5 phút, không thế chấp, nợ xấu vẫn vay được".', 
+                    mechanism: ['Dụ nạn nhân tải app vay. App bắt buộc người dùng Cấp quyền truy cập Danh bạ và Thư viện ảnh mới cho vay.', 'Giải ngân số tiền ít hơn thực tế nhưng ghi nợ cao (Vay 10 triệu, thực nhận 6 triệu, phí dịch vụ 4 triệu). Lãi suất lên đến hàng ngàn %/năm.', 'Nếu chậm trả: Kẻ gian sẽ dùng danh bạ đã ăn cắp để gọi điện chửi bới người thân, ghép ảnh khiêu dâm, lập bàn thờ nạn nhân đăng lên mạng để bôi nhọ, ép trả tiền.'], 
+                    redFlags: ['App vay tiền đòi truy cập Danh bạ (Contacts) và Hình ảnh (Gallery).', 'Lãi suất mập mờ, phí dịch vụ trừ thẳng vào tiền giải ngân.'], 
+                    prevention: ['Tuyệt đối không vay tiền qua các App quảng cáo trên mạng.', 'Nếu lỡ vay và bị khủng bố, KHÔNG tiếp tục đóng tiền vì chúng sẽ bòn rút mãi. Xóa app, khóa MXH và trình báo Công an.'] 
                 },
-                'child_model': {
-                    title: '14. Tuyển Cầu Thủ Nhí / Người Mẫu Nhí',
-                    icon: '&#128102;',
-                    description: 'Lập page giả danh các thương hiệu lớn (Hãng thời trang, CLB Bóng đá) tổ chức thi tuyển, casting cho trẻ em.',
-                    mechanism: ['Phụ huynh đăng ký sẽ được add vào nhóm Telegram.', 'Bắt phụ huynh làm "nhiệm vụ" (mua sản phẩm mồi) để con được ưu tiên xét duyệt.', 'Dùng chiêu trò lỗi hệ thống để ép mua gói sản phẩm cao hơn và chiếm đoạt.'],
-                    redFlags: ['Tổ chức thi tuyển cho trẻ em nhưng bắt phụ huynh làm nhiệm vụ thương mại.', 'Yêu cầu nạp tiền để mua lượt bình chọn/mua đồ.'],
-                    prevention: ['Xác minh thông tin cuộc thi bằng cách gọi điện trực tiếp cho hotline chính thức của thương hiệu.', 'Tuyệt đối không tham gia các cuộc thi yêu cầu phụ huynh phải nạp tiền, làm nhiệm vụ mua sắm.']
+                'fake_bank_sms': { 
+                    title: '14. SMS Brandname Giả Ngân Hàng', icon: '&#128140;', 
+                    description: 'Rất nguy hiểm vì tin nhắn lừa đảo lại xuất hiện chung một hộp thoại (luồng tin nhắn) với các tin nhắn chính thức của ngân hàng trước đó.', 
+                    mechanism: ['Kẻ gian chở một trạm phát sóng di động giả (BTS) đi quanh các khu phố đông người. Trạm này đè sóng nhà mạng, phát tán SMS giả mạo tên ngân hàng (Vietcombank, ACB...).', 'Tin nhắn dọa: "Tai khoan cua ban se bi khoa sau 1h, vui long dang nhap de xac thuc: vietcombank-vn.site".', 'Nạn nhân hoảng sợ nhấp vào link, nhập Tên đăng nhập, Mật khẩu và mã OTP. Kẻ gian ở đầu kia đồng bộ nhập vào app thật và rút sạch tiền.'], 
+                    redFlags: ['Đường link (URL) trong tin nhắn có chứa các ký tự thừa, đuôi lạ (.vip, .top, .site) hoặc sai chính tả.', 'Ngân hàng KHÔNG BAO GIỜ gửi link yêu cầu khách hàng nhập mã OTP qua SMS.'], 
+                    prevention: ['Không bao giờ nhấp vào đường link trong tin nhắn SMS báo lỗi tài khoản.', 'Chỉ mở trực tiếp App Ngân Hàng đã cài trên điện thoại để kiểm tra thông báo.'] 
                 },
-                'loan_app': {
-                    title: '15. App Cho Vay Tín Dụng Đen Online',
-                    icon: '&#128176;',
-                    description: 'Quảng cáo cho vay không cần thế chấp, giải ngân 5 phút qua các App không rõ nguồn gốc.',
-                    mechanism: ['App yêu cầu truy cập toàn bộ Danh bạ, Hình ảnh trong điện thoại.', 'Lãi suất cắt cổ, phí ẩn cực cao (vay 10 nhận 5, trả 15).', 'Nếu chậm trả, sẽ ghép ảnh khiêu dâm, ảnh cáo phó gửi cho toàn bộ người thân, công ty để bôi nhọ.'],
-                    redFlags: ['App vay tiền yêu cầu cấp quyền truy cập Danh bạ điện thoại và Thư viện ảnh.'],
-                    prevention: ['Chỉ vay vốn tại các Ngân hàng, tổ chức tín dụng được Ngân hàng Nhà nước cấp phép.', 'Nếu lỡ vay và bị đe dọa, không tiếp tục đóng tiền mà hãy thu thập bằng chứng trình báo cơ quan Công an.']
+                'online_shopping': { 
+                    title: '15. Lừa Đảo Mua Hàng Online', icon: '&#128722;', 
+                    description: 'Rất phổ biến. Mua bán qua Facebook, Zalo, Tiktok Shop nhưng không qua các sàn TMĐT có chính sách bảo vệ người tiêu dùng.', 
+                    mechanism: ['Kẻ gian đăng bán đồ giá cực rẻ (điện thoại xách tay, đồ hiệu thanh lý).', 'Kịch bản 1: Yêu cầu chuyển cọc 50% hoặc 100% rồi chặn liên lạc (bùng tiền).', 'Kịch bản 2: Ship hàng COD nhưng yêu cầu "Không cho đồng kiểm" (Không cho bóc xem hàng). Nạn nhân trả tiền cho shipper, mở ra bên trong chỉ là cục gạch, rác, quần áo rách.'], 
+                    redFlags: ['Trang Fanpage mới lập, ẩn bình luận, đánh giá ảo (toàn khen quá lời).', 'Người bán kiên quyết không cho kiểm tra hàng trước khi thanh toán.'], 
+                    prevention: ['Mua hàng giá trị cao nên ưu tiên các sàn TMĐT lớn (Shopee, Lazada) vì có chính sách hoàn tiền.', 'Luôn yêu cầu "ĐỒNG KIỂM" (bóc kiểm tra tại chỗ) trước khi giao tiền cho Shipper.'] 
                 },
-                'fake_bank_sms': {
-                    title: '16. SMS Brandname Giả Mạo Ngân Hàng',
-                    icon: '&#128140;',
-                    description: 'Sử dụng trạm phát sóng di động (BTS) giả để chèn tin nhắn lừa đảo vào luồng tin nhắn chính thức của Ngân hàng.',
-                    mechanism: ['Tin nhắn báo tài khoản bị khóa, yêu cầu click vào đường link (vd: vietcombank.vn-xxx.com).', 'Nạn nhân tưởng tin nhắn của ngân hàng thật nên nhấp vào.', 'Giao diện web giả mạo yêu cầu nhập User, Pass, mã OTP và bị rút sạch tiền.'],
-                    redFlags: ['Link web có chứa các ký tự lạ, đuôi mở rộng lạ (.vip, .top, .vn-xyz).', 'Ngân hàng không gửi link yêu cầu cung cấp OTP qua SMS.'],
-                    prevention: ['KHÔNG BAO GIỜ nhấp vào đường link trong tin nhắn SMS, dù tin nhắn đó nằm chung luồng với ngân hàng.', 'Nếu nghi ngờ tài khoản có vấn đề, hãy mở ứng dụng (App) ngân hàng trên điện thoại để kiểm tra trực tiếp.']
+                'reward': { 
+                    title: '16. Bẫy Thông Báo Trúng Thưởng', icon: '&#127873;', 
+                    description: 'Đánh vào lòng tham. Nạn nhân nhận được tin nhắn Zalo, SMS hoặc cuộc gọi báo "Trúng xe SH", "Nhận được sổ tiết kiệm 100 triệu từ sự kiện Tri ân".', 
+                    mechanism: ['Gửi cho nạn nhân một đường link trang web (làm giả rất đẹp, có logo Bộ Công Thương) để làm thủ tục nhận giải.', 'Yêu cầu nạn nhân phải đóng trước "Thuế thu nhập cá nhân 10%", "Phí xuất kho", "Phí vận chuyển".', 'Sau khi nạn nhân chuyển khoản xong, kẻ gian lập tức chặn số, tiền mất tật mang.'], 
+                    redFlags: ['Bạn trúng thưởng một chương trình mà bạn... chưa bao giờ đăng ký tham gia.', 'Tổ chức yêu cầu bạn phải lấy tiền túi CHUYỂN KHOẢN TRƯỚC các loại phí để nhận giải.'], 
+                    prevention: ['Nguyên tắc vàng: Không tham gia thì không trúng thưởng.', 'Các chương trình khuyến mãi hợp pháp sẽ KHẤU TRỪ trực tiếp tiền thuế vào giải thưởng, không bắt khách hàng phải nộp tiền trước.'] 
                 },
-                'online_shopping': {
-                    title: '17. Lừa Đảo Mua Bán Hàng Trực Tuyến',
-                    icon: '&#128722;',
-                    description: 'Thanh toán tiền nhưng không giao hàng, hoặc giao hàng giả, hàng kém chất lượng (treo đầu dê bán thịt chó).',
-                    mechanism: ['Yêu cầu chuyển khoản trước 100% nhưng sau đó chặn Facebook/Zalo.', 'Gửi hàng COD nhưng không cho đồng kiểm, bên trong là gạch đá, giấy lộn.', 'Tạo các đánh giá (review) ảo để lừa người mua.'],
-                    redFlags: ['Không cho kiểm tra hàng trước khi thanh toán (Đồng kiểm).', 'Fanpage mới lập nhưng có rất nhiều đánh giá tốt, ẩn bình luận.'],
-                    prevention: ['Ưu tiên mua hàng trên các sàn TMĐT uy tín có chính sách bảo vệ người mua (Shopee, Lazada, Tiki...).', 'Yêu cầu được "Đồng kiểm" (kiểm tra hàng) trước khi thanh toán tiền mặt (COD).']
+                'task_scam': { 
+                    title: '17. Làm Nhiệm Vụ (Tiktok, YouTube)', icon: '&#128250;', 
+                    description: 'Biến tướng của lừa đảo CTV. Đánh vào nhóm sinh viên, mẹ bỉm sữa muốn kiếm tiền lúc rảnh rỗi chỉ bằng cách lướt điện thoại.', 
+                    mechanism: ['Mời vào nhóm Telegram, phân công việc: Xem video Youtube 10s, thả tim Tiktok, hoặc nghe nhạc Spotify.', 'Vài lần đầu, cứ xong việc là nhận ngay 30.000đ - 50.000đ vào tài khoản.', 'Sau đó, quản lý bảo hệ thống thả tim bị lỗi, chuyển sang "Nhiệm vụ đầu tư vốn" (Gửi 1 triệu lãi 1.3 triệu). Nạn nhân ham lời nộp số tiền ngày càng lớn rồi bị chiếm đoạt.'], 
+                    redFlags: ['Công việc quá nhàn hạ, kiếm tiền quá dễ dàng vô lý.', 'Đang làm nhiệm vụ không vốn tự nhiên bị ép chuyển sang nhiệm vụ phải "ứng vốn".'], 
+                    prevention: ['Bỏ qua ngay các tin nhắn rác trên Zalo/SMS mời làm nhiệm vụ thả tim kiếm tiền.', 'Cảnh giác với mọi hình thức kiếm tiền online yêu cầu dùng ứng dụng Telegram.'] 
                 },
-                'reward': {
-                    title: '18. Thông Báo Trúng Thưởng, Tặng Quà',
-                    icon: '&#127873;',
-                    description: 'Gửi tin nhắn SMS, Zalo hoặc gọi điện thông báo trúng xe máy SH, trúng thưởng tiền mặt, quà tri ân khách hàng.',
-                    mechanism: ['Yêu cầu nạn nhân đóng trước "Thuế thu nhập cá nhân" 10% hoặc "Phí vận chuyển".', 'Chuyển tiền xong kẻ gian biến mất, không có quà nào cả.', 'Hoặc gửi link web yêu cầu điền thông tin thẻ tín dụng để nhận thưởng.'],
-                    redFlags: ['Yêu cầu đóng tiền trước để nhận giải thưởng (Tổ chức thật sẽ khấu trừ thẳng vào giải thưởng).'],
-                    prevention: ['Nhớ rằng: Không tham gia chương trình thì không thể tự nhiên trúng thưởng.', 'Tuyệt đối không chuyển khoản bất kỳ loại phí nào để nhận quà/giải thưởng.']
+                'phishing': { 
+                    title: '18. Email Phishing Đánh Cắp Mật Khẩu', icon: '&#128231;', 
+                    description: 'Lừa đảo câu cá (Phishing) nhắm vào tài khoản Facebook, Apple ID, Google, hoặc Email doanh nghiệp.', 
+                    mechanism: ['Nạn nhân nhận được email có tiêu đề dọa dẫm: "Tài khoản của bạn sẽ bị khóa sau 24h vì vi phạm chính sách", "Có người đang đăng nhập vào iCloud của bạn".', 'Trong email có nút bấm đỏ "Bảo mật tài khoản ngay".', 'Nút này dẫn đến một trang web giả mạo làm giống hệt trang đăng nhập thật. Nạn nhân gõ User/Pass vào là hacker bắt được ngay.'], 
+                    redFlags: ['Địa chỉ email gửi đến có phần đuôi rất lạ (Ví dụ: support@facebook-security-xyz.com thay vì @facebook.com).', 'Đường dẫn URL trên trình duyệt viết sai chính tả (vd: faceb00k.com).'], 
+                    prevention: ['Bình tĩnh kiểm tra kỹ ĐỊA CHỈ EMAIL NGƯỜI GỬI.', 'Tuyệt đối không nhập mật khẩu vào các trang web được mở ra từ một đường link trong email. Hãy tự gõ tên trang web (vd: facebook.com) vào trình duyệt.'] 
                 },
-                'task_scam': {
-                    title: '19. Lừa Đảo Làm Nhiệm Vụ (Tiktok, YouTube)',
-                    icon: '&#128250;',
-                    description: 'Mời tham gia các nhóm Telegram xem video YouTube, thả tim Tiktok, nghe nhạc Spotify để nhận tiền.',
-                    mechanism: ['Tương tự mô hình tuyển CTV. Các nhiệm vụ đầu (thả tim) được trả vài chục nghìn.', 'Sau đó dụ dỗ "nâng cấp gói VIP" để làm nhiệm vụ doanh thu cao.', 'Yêu cầu chuyển khoản số tiền lớn và chiếm đoạt.'],
-                    redFlags: ['Phải nạp tiền vào tài khoản lạ để được làm nhiệm vụ "kèo thơm".'],
-                    prevention: ['Bỏ qua ngay các tin nhắn/lời mời kiếm tiền dễ dàng bằng cách xem video, thả tim.', 'Không tải các ứng dụng nhắn tin ẩn danh (như Telegram) chỉ để tham gia các nhóm kiếm tiền online.']
+                'sim_upgrade': { 
+                    title: '19. Lừa Đảo Nâng Cấp SIM 4G/5G', icon: '&#128246;', 
+                    description: 'Cực kỳ tinh vi, lợi dụng các đợt phủ sóng 5G mới của nhà mạng để cướp quyền kiểm soát SIM điện thoại.', 
+                    mechanism: ['Kẻ gian gọi tự xưng nhân viên Viettel, VNPT hỗ trợ đổi SIM lên 5G miễn phí tại nhà.', 'Chúng đọc đúng số CCCD, địa chỉ của nạn nhân để tạo lòng tin.', 'Yêu cầu nạn nhân nhắn tin theo cú pháp chúng đọc, hoặc đọc mã OTP gửi về máy. Thực chất, đây là thao tác xin cấp lại eSIM (chuyển số điện thoại của bạn sang máy điện thoại của kẻ gian).', 'Mất SIM, mất luôn quyền nhận OTP ngân hàng, tài khoản lập tức bị bòn rút.'], 
+                    redFlags: ['Nhà mạng KHÔNG BAO GIỜ gọi điện bắt khách hàng đọc mã OTP để đổi SIM.'], 
+                    prevention: ['Nếu có nhu cầu nâng cấp SIM, đổi eSIM, hãy CẦM CCCD RA TRỰC TIẾP điểm giao dịch của nhà mạng để làm.', 'Bảo vệ mã OTP như bảo vệ mạng sống. Không đọc cho bất kỳ ai.'] 
                 },
-                'sugar_baby': {
-                    title: '20. Môi Giới Tình Dục / "Sugar Baby"',
-                    icon: '&#128131;',
-                    description: 'Đánh vào lòng tham và sự tò mò. Lập các nhóm chat cung cấp dịch vụ tình dục, tìm "Sugar Baby".',
-                    mechanism: ['Yêu cầu đóng "Phí gia nhập Câu lạc bộ", "Phí bảo hiểm an toàn VIP".', 'Gửi các đường link giả mạo yêu cầu đăng ký thẻ thành viên.', 'Chiếm đoạt tiền và chặn liên lạc, nạn nhân thường xấu hổ không dám báo công an.'],
-                    redFlags: ['Yêu cầu chuyển tiền trước (tiền cọc, tiền làm thẻ VIP).'],
-                    prevention: ['Tránh xa các hội nhóm, lời mời chào cung cấp dịch vụ nhạy cảm trái pháp luật.', 'Cảnh giác cao độ với bất kỳ hội nhóm ẩn danh nào yêu cầu nộp phí tham gia trên mạng.']
+                'identity_theft': { 
+                    title: '20. Thuê, Mua Bán Tài Khoản Ngân Hàng', icon: '&#128100;', 
+                    description: 'Nhắm vào học sinh, sinh viên, công nhân cần tiền gấp. Kẻ gian dụ dỗ họ bán thông tin danh tính để mở tài khoản.', 
+                    mechanism: ['Đăng bài Facebook: "Thuê người quét khuôn mặt mở tài khoản nhận 500k", "Thu mua thẻ ngân hàng không dùng".', 'Những tài khoản này (đứng tên nạn nhân) sẽ được kẻ gian dùng làm tài khoản trung gian để nhận tiền lừa đảo, tiền cờ bạc mạng, rửa tiền.', 'Khi Công an vào cuộc điều tra, người đứng tên tài khoản (nạn nhân bán CCCD) sẽ là nghi phạm đầu tiên bị triệu tập và có thể đối mặt án tù vì tội tiếp tay.'], 
+                    redFlags: ['Bất kỳ ai (kể cả người quen) trả tiền để nhờ bạn dùng CCCD và khuôn mặt mở tài khoản ngân hàng giúp họ.'], 
+                    prevention: ['Nhận thức rõ: Việc bán, cho thuê tài khoản ngân hàng là HÀNH VI VI PHẠM PHÁP LUẬT.', 'Bảo vệ hình ảnh CCCD, không đăng tải bừa bãi lên mạng.'] 
                 },
-                'phishing': {
-                    title: '21. Email/Link Phishing Đánh Cắp Tài Khoản',
-                    icon: '&#128231;',
-                    description: 'Gửi email giả mạo Facebook, Google, Apple hoặc công ty nội bộ yêu cầu đổi mật khẩu gấp.',
-                    mechanism: ['Email có tiêu đề khẩn cấp: "Tài khoản của bạn sẽ bị khóa sau 24h".', 'Chứa link dẫn đến trang web giả mạo có giao diện giống hệt trang thật.', 'Nhập thông tin vào là lập tức bị hacker thu thập.'],
-                    redFlags: ['Địa chỉ email gửi đến có đuôi lạ (không phải @facebookmail.com hay @google.com).', 'Domain trang web sai chính tả (vd: faceb00k.com).'],
-                    prevention: ['Kiểm tra thật kỹ địa chỉ email người gửi và đường link URL trước khi nhấp vào.', 'Không bao giờ điền mật khẩu, mã OTP vào một trang web được mở ra từ một đường link trong email lạ.']
+                'export_labor': { 
+                    title: '21. Lừa Đảo Xuất Khẩu Lao Động', icon: '&#128747;', 
+                    description: 'Tạo lập các Fanpage công ty XKLĐ giả mạo, nhắm vào mong muốn đổi đời của người dân nông thôn, lao động phổ thông.', 
+                    mechanism: ['Quảng cáo các đơn hàng đi Hàn Quốc, Nhật Bản, Úc "Việc nhẹ lương 50 triệu", "Bay nhanh không cần thi tiếng", "Bao đậu Visa 100%".', 'Gửi cho nạn nhân xem hợp đồng lao động giả, Visa giả đóng mộc đỏ chót để củng cố niềm tin.', 'Yêu cầu nộp tiền làm nhiều đợt: Cọc giữ chỗ, phí bôi trơn làm Visa nhanh, tiền vé máy bay. Đến ngày bay thì văn phòng bốc hơi.'], 
+                    redFlags: ['Công ty mập mờ, không có tên trong danh sách doanh nghiệp được Bộ LĐ-TB&XH cấp phép.', 'Cam kết "Bao đậu", thủ tục dễ dàng một cách vô lý đối với các thị trường khó tính (Úc, Hàn).'], 
+                    prevention: ['Tra cứu kỹ giấy phép hoạt động của công ty trên website chính thức của Cục Quản lý lao động ngoài nước (dolab.gov.vn).', 'Đến tận trụ sở công ty (địa chỉ thật) để tìm hiểu, không giao dịch qua mạng với cò mồi cá nhân.'] 
                 },
-                'sim_upgrade': {
-                    title: '22. Lừa Đảo Nâng Cấp SIM 4G/5G',
-                    icon: '&#128246;',
-                    description: 'Gọi điện xưng là nhân viên nhà mạng, đề nghị hỗ trợ nâng cấp SIM từ 3G/4G lên 5G miễn phí.',
-                    mechanism: ['Hướng dẫn nạn nhân nhắn tin theo cú pháp lấy mã OTP (Thực chất là cú pháp cấp lại eSIM sang máy kẻ gian).', 'Nạn nhân mất quyền kiểm soát số điện thoại.', 'Kẻ gian dùng số điện thoại đó lấy mã OTP ngân hàng, ví điện tử.'],
-                    redFlags: ['Nhà mạng không gọi điện hướng dẫn đổi SIM/eSIM qua điện thoại và bắt đọc OTP.'],
-                    prevention: ['Nếu có nhu cầu nâng cấp SIM/eSIM, hãy ra trực tiếp điểm giao dịch của nhà mạng (Viettel, VNPT, MobiFone).', 'Không cung cấp mã OTP gửi về máy điện thoại cho bất kỳ ai.']
+                'cheap_travel': { 
+                    title: '22. Bẫy Combo Du Lịch, Vé Máy Bay Giá Rẻ', icon: '&#127958;', 
+                    description: 'Thường bùng nổ vào các dịp Lễ, Tết, kỳ nghỉ Hè. Lập các page giả mạo đại lý du lịch.', 
+                    mechanism: ['Chạy quảng cáo bán Combo (Vé máy bay + Khách sạn 5 sao) với giá rẻ giật mình.', 'Gửi cho khách hàng mã Code đặt chỗ (Booking code) - thực chất đây chỉ là mã giữ chỗ ảo (chưa thanh toán) mà ai cũng tự tạo được trên web hãng bay.', 'Khách hàng thấy có mã code thật nên tin tưởng, chuyển khoản 100% tiền. Kẻ gian không thanh toán mã đó, mã tự hủy, khách hàng ra sân bay mới biết bị lừa.'], 
+                    redFlags: ['Giá rẻ hơn 30-50% so với giá gốc của hãng bay/khách sạn.', 'Yêu cầu chuyển khoản tiền vé vào TÀI KHOẢN CÁ NHÂN thay vì tài khoản doanh nghiệp.'], 
+                    prevention: ['Yêu cầu cung cấp giấy phép kinh doanh của đại lý. Mua qua các app uy tín (Traveloka, Agoda) hoặc trực tiếp web hãng.', 'Khi nhận mã Code vé, hãy GỌI TRỰC TIẾP LÊN TỔNG ĐÀI HÃNG HÀNG KHÔNG để kiểm tra xem vé ĐÃ ĐƯỢC THANH TOÁN XUẤT VÉ chưa.'] 
                 },
-                'identity_theft': {
-                    title: '23. Đánh Cắp Danh Tính, Thuê Mở Tài Khoản',
-                    icon: '&#128100;',
-                    description: 'Thuê, mua lại CCCD/CMND của người dân (thường là sinh viên, lao động nghèo) để mở tài khoản ngân hàng ảo.',
-                    mechanism: ['Trả tiền 200k-500k để nạn nhân chụp ảnh CCCD và quét khuôn mặt.', 'Dùng tài khoản ngân hàng này làm công cụ nhận tiền lừa đảo, rửa tiền.', 'Người cho thuê/bán CCCD sẽ bị cơ quan Công an triệu tập và chịu trách nhiệm pháp lý.'],
-                    redFlags: ['Bất kỳ ai lạ mặt ngỏ ý mua/thuê thông tin cá nhân, mượn CCCD để đăng ký dịch vụ.'],
-                    prevention: ['Bảo vệ tuyệt đối thông tin CMND/CCCD. Không đăng tải ảnh CCCD lên mạng xã hội.', 'Tuyệt đối KHÔNG cho mượn, cho thuê, bán tài khoản ngân hàng của mình cho người khác dưới mọi hình thức.']
+                'child_model': { 
+                    title: '23. Tuyển Người Mẫu Nhí, Cầu Thủ Nhí', icon: '&#128102;', 
+                    description: 'Đánh vào tâm lý thích khoe con, muốn con nổi tiếng của các bậc phụ huynh.', 
+                    mechanism: ['Lập Fanpage mạo danh VTV, các hãng thời trang trẻ em, câu lạc bộ bóng đá thông báo tổ chức Casting.', 'Phụ huynh đăng ký sẽ được tư vấn viên add vào nhóm Telegram để "làm bài test".', 'Bài test thực chất là bắt phụ huynh chuyển tiền mua đồ (được hoàn tiền + hoa hồng) để chứng minh năng lực tài chính, hoặc mua phiếu "bình chọn" cho con. Cuối cùng chiếm đoạt số tiền lớn.'], 
+                    redFlags: ['Tổ chức thi năng khiếu cho trẻ em nhưng lại ép phụ huynh đi làm nhiệm vụ mua sắm, chuyển tiền.', 'Kênh liên lạc chính chuyển từ Facebook sang Telegram.'], 
+                    prevention: ['Các thương hiệu lớn luôn đăng tải thông tin cuộc thi trên Website có dấu tick xanh chính thức.', 'Tuyệt đối KHÔNG tham gia bất kỳ cuộc thi nào yêu cầu phụ huynh phải nạp tiền để mua bình chọn hoặc ứng vốn.'] 
                 },
-                'export_labor': {
-                    title: '24. Lừa Đảo Xuất Khẩu Lao Động',
-                    icon: '&#128747;',
-                    description: 'Tạo lập các trang web, Fanpage công ty xuất khẩu lao động dỏm, cam kết đi nước ngoài (Hàn, Nhật, Úc) nhanh, thu nhập cao.',
-                    mechanism: ['Tư vấn nhiệt tình, làm giả visa, giấy tờ hợp đồng ngoại.', 'Yêu cầu đóng nhiều đợt tiền: Phí đặt cọc, phí chống trốn, vé máy bay.', 'Đến ngày bay không thấy người của công ty, phát hiện visa giả.'],
-                    redFlags: ['Công ty không có tên trong danh sách doanh nghiệp XKLĐ được cấp phép.', 'Cam kết "Bao đậu", xuất cảnh cực nhanh mà không cần học tiếng.'],
-                    prevention: ['Chỉ làm việc với các công ty có Giấy phép hoạt động XKLĐ (Tra cứu trên website của Cục Quản lý lao động ngoài nước - dolab.gov.vn).', 'Đến trực tiếp trụ sở công ty để tìm hiểu, không nộp tiền cho môi giới cá nhân qua mạng.']
+                'sugar_baby': { 
+                    title: '24. Môi Giới Dịch Vụ Nhạy Cảm', icon: '&#128131;', 
+                    description: 'Đánh vào lòng tham và sự tò mò. Lập các nhóm chat cung cấp dịch vụ tình dục, tìm "Sugar Baby", "Sugar Daddy".', 
+                    mechanism: ['Mời chào bằng những hình ảnh nhạy cảm trên Telegram, Zalo.', 'Để được "nhận kèo" (gặp gỡ), nạn nhân bị yêu cầu chuyển khoản đóng các loại phí: "Phí mở thẻ thành viên VIP Câu lạc bộ", "Phí bảo hiểm an toàn gái gọi", "Phí khách sạn".', 'Sau khi chuyển tiền, kẻ gian chặn liên lạc. Nạn nhân dù mất tiền nhưng vì tính chất nhạy cảm, xấu hổ nên cam chịu, không dám báo Công an.'], 
+                    redFlags: ['Yêu cầu chuyển tiền đặt cọc trước cho các dịch vụ môi giới ảo, thẻ VIP ảo.'], 
+                    prevention: ['Tránh xa các hội nhóm, lời mời chào cung cấp dịch vụ nhạy cảm trái pháp luật trên mạng.', 'Luôn tỉnh táo: Không có một tổ chức nào lập ra để cung cấp "bạn tình" miễn phí mà bắt bạn đóng phí bảo hiểm trước cả.'] 
                 }
             };
 
@@ -856,94 +587,63 @@
             const searchInput = document.getElementById('scam-search');
             let currentActiveButton = null;
 
-            // Function to render the detail view
             function renderScamDetail(scamKey) {
                 const data = scamData[scamKey];
-                
-                // Construct HTML for mechanism list
-                const mechHTML = data.mechanism.map(step => `<li class="mb-2 text-slate-700">${step}</li>`).join('');
-                
-                // Construct HTML for red flags list
-                const flagsHTML = data.redFlags.map(flag => `<li class="flex items-start gap-2 mb-2 text-alert-700 font-medium"><span class="mt-1">&#9888;</span><span>${flag}</span></li>`).join('');
+                const mechHTML = data.mechanism.map(step => `<li class="mb-3 text-slate-700 leading-relaxed">${step}</li>`).join('');
+                const flagsHTML = data.redFlags.map(flag => `<li class="flex items-start gap-2 mb-3 text-alert-700 font-medium leading-relaxed"><span class="mt-1">&#9888;</span><span>${flag}</span></li>`).join('');
+                const prevHTML = data.prevention.map(tip => `<li class="flex items-start gap-3 mb-3 leading-relaxed"><span class="text-brand-500 mt-0.5 text-lg">&#10004;</span><span class="text-green-800 font-medium">${tip}</span></li>`).join('');
 
-                // Construct HTML for prevention list
-                const prevHTML = data.prevention.map(tip => `<li class="flex items-start gap-3 mb-3"><span class="text-brand-500 mt-0.5">&#10004;</span><span class="text-brand-800 font-medium">${tip}</span></li>`).join('');
-
-                const html = `
+                scamDetailContainer.innerHTML = `
                     <div class="animate-[fadeIn_0.3s_ease-out]">
                         <div class="flex items-center gap-4 mb-6 border-b border-slate-200 pb-4">
                             <span class="text-4xl bg-slate-100 p-3 rounded-xl">${data.icon}</span>
-                            <h3 class="text-2xl font-bold text-slate-900">${data.title.replace(/^[0-9]+\.\s/, '')}</h3>
+                            <h3 class="text-2xl font-bold text-slate-900 leading-tight">${data.title}</h3>
                         </div>
-                        
-                        <p class="text-lg text-slate-700 mb-6 bg-slate-100 p-4 rounded-lg border-l-4 border-slate-400">
+                        <p class="text-lg text-slate-700 mb-6 bg-slate-100 p-5 rounded-lg border-l-4 border-brand-500 font-medium shadow-sm">
                             ${data.description}
                         </p>
-                        
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <h4 class="text-lg font-semibold text-slate-800 mb-3 flex items-center gap-2">
-                                    <span>&#128260;</span> Cách Thức Hoạt Động
+                            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                                <h4 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                    <span class="text-brand-500">&#128260;</span> Kịch Bản Hoạt Động
                                 </h4>
-                                <ul class="list-decimal pl-5 space-y-1 marker:text-slate-500">
-                                    ${mechHTML}
-                                </ul>
+                                <ul class="list-decimal pl-5 space-y-2 marker:text-brand-500 marker:font-bold">${mechHTML}</ul>
                             </div>
-                            
-                            <div class="bg-alert-50 p-5 rounded-xl border border-alert-200">
-                                <h4 class="text-lg font-semibold text-alert-800 mb-3 flex items-center gap-2">
-                                    <span>&#128681;</span> Dấu Hiệu Nhận Biết
+                            <div class="bg-alert-50 p-5 rounded-xl border border-alert-200 shadow-sm">
+                                <h4 class="text-lg font-bold text-alert-800 mb-4 flex items-center gap-2">
+                                    <span class="text-alert-600">&#128681;</span> Dấu Hiệu Đỏ Nhận Biết
                                 </h4>
-                                <ul class="space-y-1">
-                                    ${flagsHTML}
-                                </ul>
+                                <ul class="space-y-2">${flagsHTML}</ul>
                             </div>
                         </div>
-
-                        <!-- New Prevention Section -->
-                        <div class="bg-green-50 p-5 rounded-xl border border-green-200 shadow-sm">
-                            <h4 class="text-lg font-bold text-green-800 mb-4 flex items-center gap-2">
-                                <span>&#128304;</span> Cách Phòng Tránh Hiệu Quả
+                        <div class="bg-green-50 p-6 rounded-xl border border-green-200 shadow-sm">
+                            <h4 class="text-xl font-bold text-green-800 mb-4 flex items-center gap-2">
+                                <span>&#128304;</span> Hành Động Phòng Tránh
                             </h4>
-                            <ul class="space-y-2">
-                                ${prevHTML}
-                            </ul>
+                            <ul class="space-y-2">${prevHTML}</ul>
                         </div>
                     </div>
                 `;
-                scamDetailContainer.innerHTML = html;
             }
 
-            // Function to create and render the buttons list based on filter
             function renderScamList(filterText = '') {
-                scamListContainer.innerHTML = ''; // Clear current
+                scamListContainer.innerHTML = ''; 
                 const lowerFilter = filterText.toLowerCase();
                 let isFirstVisible = true;
 
                 Object.keys(scamData).forEach((key) => {
                     const data = scamData[key];
-                    // Search logic: check title or description
-                    if (data.title.toLowerCase().includes(lowerFilter) || data.description.toLowerCase().includes(lowerFilter)) {
-                        
+                    if (data.title.toLowerCase().includes(lowerFilter) || data.description.toLowerCase().includes(lowerFilter) || data.mechanism.join(' ').toLowerCase().includes(lowerFilter)) {
                         const btn = document.createElement('button');
                         btn.className = 'scam-item w-full text-left px-4 py-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-brand-300 transition-all font-semibold text-slate-700 flex items-center gap-3 shadow-sm text-sm';
-                        btn.innerHTML = `<span class="text-xl">${data.icon}</span> <span class="leading-tight">${data.title}</span>`;
-                        
+                        btn.innerHTML = `<span class="text-xl">${data.icon}</span> <span class="leading-tight">${data.title.replace(/^[0-9]+\.\s/, '')}</span>`;
                         btn.addEventListener('click', function() {
-                            // Update active state
-                            if (currentActiveButton) {
-                                currentActiveButton.classList.remove('active', 'border-alert-500');
-                            }
+                            if (currentActiveButton) currentActiveButton.classList.remove('active', 'border-alert-500');
                             this.classList.add('active', 'border-alert-500');
                             currentActiveButton = this;
-
-                            // Render content
                             renderScamDetail(key);
                         });
-
                         scamListContainer.appendChild(btn);
-
-                        // Auto-click the first visible item
                         if (isFirstVisible) {
                             btn.click();
                             isFirstVisible = false;
@@ -951,88 +651,42 @@
                     }
                 });
 
-                // Handle no results
                 if (isFirstVisible) {
-                    scamListContainer.innerHTML = `<p class="text-slate-500 text-center p-4">Không tìm thấy kết quả phù hợp.</p>`;
-                    scamDetailContainer.innerHTML = `
-                        <div class="h-full flex flex-col items-center justify-center text-center text-slate-400 min-h-[500px]">
-                            <span class="text-6xl mb-4">&#128533;</span>
-                            <p class="text-lg">Không có dữ liệu cho từ khóa này.</p>
-                        </div>
-                    `;
+                    scamListContainer.innerHTML = `<p class="text-slate-500 text-center p-4">Không tìm thấy kết quả.</p>`;
+                    scamDetailContainer.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-center text-slate-400 min-h-[500px]"><span class="text-6xl mb-4">&#128533;</span><p class="text-lg">Không có dữ liệu cho từ khóa này.</p></div>`;
                 }
             }
-
-            // Initial render
             renderScamList();
+            searchInput.addEventListener('input', (e) => renderScamList(e.target.value));
 
-            // Search Event Listener
-            searchInput.addEventListener('input', (e) => {
-                renderScamList(e.target.value);
-            });
-
-            // Add simple fade-in animation to Tailwind via injected styles for dynamic content
-            const style = document.createElement('style');
-            style.innerHTML = `
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(10px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-            `;
-            document.head.appendChild(style);
-
-            // --- Add to Home Screen (A2HS) Logic ---
+            // --- PWA A2HS Logic ---
             let deferredPrompt;
             const installBanner = document.getElementById('install-banner');
-            const installBtn = document.getElementById('install-btn');
-            const closeInstallBtn = document.getElementById('close-install-btn');
-
-            // Detect if iOS
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            // Detect if already installed (Standalone mode)
             const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
 
             if (!isStandalone) {
-                // Determine OS behavior
                 if (isIOS) {
-                    // Show banner with iOS instructions after a short delay
-                    setTimeout(() => {
-                        installBanner.classList.remove('hidden');
-                        setTimeout(() => installBanner.classList.remove('translate-y-full'), 100);
-                    }, 3000);
-                    
-                    installBtn.innerText = 'Xem hướng dẫn';
-                    installBtn.addEventListener('click', () => {
-                        alert('Dành cho iPhone/iPad (Trình duyệt Safari):\n\n1. Nhấn vào biểu tượng Chia sẻ (Share) ở mép dưới màn hình.\n2. Cuộn xuống và chọn "Thêm vào MH chính" (Add to Home Screen).\n3. Nhấn "Thêm".');
-                    });
+                    setTimeout(() => { installBanner.classList.remove('hidden'); setTimeout(() => installBanner.classList.remove('translate-y-full'), 100); }, 3000);
+                    document.getElementById('install-btn').innerText = 'Xem hướng dẫn';
+                    document.getElementById('install-btn').addEventListener('click', () => alert('Dành cho iPhone/iPad (Safari):\n\n1. Nhấn nút Chia sẻ (Share) ở dưới màn hình.\n2. Chọn "Thêm vào MH chính" (Add to Home Screen).'));
                 } else {
-                    // Android Chrome (Listen for prompt event)
                     window.addEventListener('beforeinstallprompt', (e) => {
-                        e.preventDefault(); // Prevent default prompt
-                        deferredPrompt = e; // Stash the event
-                        // Show the custom banner
-                        installBanner.classList.remove('hidden');
-                        setTimeout(() => installBanner.classList.remove('translate-y-full'), 100);
+                        e.preventDefault(); deferredPrompt = e;
+                        installBanner.classList.remove('hidden'); setTimeout(() => installBanner.classList.remove('translate-y-full'), 100);
                     });
-
-                    installBtn.addEventListener('click', async () => {
+                    document.getElementById('install-btn').addEventListener('click', async () => {
                         if (deferredPrompt) {
-                            deferredPrompt.prompt(); // Show the native prompt
+                            deferredPrompt.prompt();
                             const { outcome } = await deferredPrompt.userChoice;
-                            if (outcome === 'accepted') {
-                                installBanner.classList.add('translate-y-full');
-                                setTimeout(() => installBanner.classList.add('hidden'), 500);
-                            }
+                            if (outcome === 'accepted') hideInstallBanner();
                             deferredPrompt = null;
                         }
                     });
                 }
             }
-
-            closeInstallBtn.addEventListener('click', () => {
-                installBanner.classList.add('translate-y-full');
-                setTimeout(() => installBanner.classList.add('hidden'), 500);
-            });
+            function hideInstallBanner() { installBanner.classList.add('translate-y-full'); setTimeout(() => installBanner.classList.add('hidden'), 500); }
+            document.getElementById('close-install-btn').addEventListener('click', hideInstallBanner);
 
             // --- AI Chatbot Logic (Gemini API) ---
             const chatToggleBtn = document.getElementById('chat-toggle-btn');
@@ -1042,150 +696,91 @@
             const chatSendBtn = document.getElementById('chat-send-btn');
             const chatMessages = document.getElementById('chat-messages');
 
-            // Gemini Setup
-            const apiKey = ""; // API Key is injected by the environment
-            const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            // --- QUAN TRỌNG: ĐIỀN API KEY CỦA BẠN VÀO DƯỚI ĐÂY ---
+            // Lấy miễn phí tại: aistudio.google.com
+            const apiKey = "AIzaSyBnElZdx1FrCB1JLJtqVNN99y54hTISJSM"; 
             
-            const systemInstruction = `Bạn là Trợ lý AI Cứu hộ an ninh mạng của dự án "Lá Chắn Số" tại Việt Nam. 
-            Nhiệm vụ của bạn:
-            1. Phân tích mô tả của người dùng để nhận diện xem họ đang gặp hình thức lừa đảo nào (giả danh công an, việc nhẹ lương cao, deepfake, lừa cài app, v.v.).
-            2. Nếu người dùng đang hoảng loạn, hãy mở đầu bằng 1 câu trấn an (Ví dụ: "Bạn hãy bình tĩnh, đây là thủ đoạn lừa đảo phổ biến...").
-            3. Đưa ra CÁCH XỬ LÝ KHẨN CẤP theo dạng gạch đầu dòng ngắn gọn (VD: Lập tức gọi ngân hàng khóa thẻ, tuyệt đối không chuyển tiền, chặn số gọi đến, gọi 156 để báo cáo).
-            Lưu ý: Trả lời cực kỳ ngắn gọn, dễ hiểu, súc tích (dưới 150 chữ). Không dùng định dạng markdown phức tạp, chỉ dùng gạch đầu dòng và in đậm những từ quan trọng. Không giải thích dông dài. Chỉ hướng dẫn hành động.`;
-
+            // Dùng gemini-1.5-flash để đảm bảo tương thích mọi tài khoản cá nhân
+            const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            const systemInstruction = `Bạn là Trợ lý AI Cứu hộ an ninh mạng dự án "Lá Chắn Số". Phân tích mô tả người dùng, trấn an và đưa ra CÁCH XỬ LÝ KHẨN CẤP ngắn gọn dạng gạch đầu dòng (khóa thẻ, gọi 156, báo công an). Ngắn gọn dưới 100 chữ.`;
             let chatHistory = [];
 
-            // UI Toggles
             function toggleChat() {
                 if (chatWindow.classList.contains('hidden')) {
                     chatWindow.classList.remove('hidden');
-                    // Small delay to allow display:block to apply before animating opacity/transform
-                    setTimeout(() => {
-                        chatWindow.classList.remove('opacity-0', 'scale-95');
-                        chatWindow.classList.add('opacity-100', 'scale-100');
-                        chatInput.focus();
-                    }, 10);
+                    setTimeout(() => { chatWindow.classList.remove('opacity-0', 'scale-95'); chatWindow.classList.add('opacity-100', 'scale-100'); chatInput.focus(); }, 10);
                 } else {
-                    chatWindow.classList.remove('opacity-100', 'scale-100');
-                    chatWindow.classList.add('opacity-0', 'scale-95');
+                    chatWindow.classList.remove('opacity-100', 'scale-100'); chatWindow.classList.add('opacity-0', 'scale-95');
                     setTimeout(() => chatWindow.classList.add('hidden'), 300);
                 }
             }
-
             chatToggleBtn.addEventListener('click', toggleChat);
             chatCloseBtn.addEventListener('click', toggleChat);
 
-            // Message UI Handling
             function addMessageToUI(text, isUser = false) {
                 const msgDiv = document.createElement('div');
                 msgDiv.className = 'flex gap-2 w-full ' + (isUser ? 'justify-end' : 'justify-start');
-                
-                const innerHTML = isUser ? `
-                    <div class="bg-brand-600 text-white p-3 rounded-2xl rounded-tr-none text-sm shadow-sm max-w-[85%]">
-                        ${text.replace(/\n/g, '<br>')}
-                    </div>
-                ` : `
-                    <div class="text-2xl mt-1">&#129302;</div>
-                    <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 text-sm text-slate-800 shadow-sm max-w-[85%] leading-relaxed">
-                        ${text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>')}
-                    </div>
-                `;
-                
-                msgDiv.innerHTML = innerHTML;
-                chatMessages.appendChild(msgDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
+                msgDiv.innerHTML = isUser ? 
+                    `<div class="bg-brand-600 text-white p-3 rounded-2xl rounded-tr-none text-sm shadow-sm max-w-[85%]">${text.replace(/\n/g, '<br>')}</div>` : 
+                    `<div class="text-2xl mt-1">&#129302;</div><div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 text-sm text-slate-800 shadow-sm max-w-[85%] leading-relaxed">${text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>')}</div>`;
+                chatMessages.appendChild(msgDiv); chatMessages.scrollTop = chatMessages.scrollHeight;
             }
 
             function showTypingIndicator() {
-                const typingDiv = document.createElement('div');
-                typingDiv.id = 'typing-indicator';
-                typingDiv.className = 'flex gap-2 w-full justify-start';
-                typingDiv.innerHTML = `
-                    <div class="text-2xl mt-1">&#129302;</div>
-                    <div class="bg-white p-4 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm typing-indicator flex items-center h-[45px]">
-                        <span></span><span></span><span></span>
-                    </div>
-                `;
-                chatMessages.appendChild(typingDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
+                const typingDiv = document.createElement('div'); typingDiv.id = 'typing-indicator'; typingDiv.className = 'flex gap-2 w-full justify-start';
+                typingDiv.innerHTML = `<div class="text-2xl mt-1">&#129302;</div><div class="bg-white p-4 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm typing-indicator flex items-center h-[45px]"><span></span><span></span><span></span></div>`;
+                chatMessages.appendChild(typingDiv); chatMessages.scrollTop = chatMessages.scrollHeight;
             }
+            function removeTypingIndicator() { const indicator = document.getElementById('typing-indicator'); if (indicator) indicator.remove(); }
 
-            function removeTypingIndicator() {
-                const indicator = document.getElementById('typing-indicator');
-                if (indicator) indicator.remove();
-            }
-
-            // API Call with Exponential Backoff
-            async function callGeminiAPI() {
-                const payload = {
-                    contents: chatHistory,
-                    systemInstruction: { parts: [{ text: systemInstruction }] }
-                };
-
-                let delay = 1000;
-                for (let i = 0; i < 5; i++) {
-                    try {
-                        const response = await fetch(geminiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-
-                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                        
-                        const data = await response.json();
-                        return data.candidates[0].content.parts[0].text;
-                    } catch (error) {
-                        if (i === 4) throw error;
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        delay *= 2;
-                    }
-                }
-            }
-
-            // Handle Send
             async function handleSend() {
                 const text = chatInput.value.trim();
                 if (!text) return;
 
-                // UI updates
-                chatInput.value = '';
-                chatInput.disabled = true;
-                chatSendBtn.disabled = true;
-                addMessageToUI(text, true);
-                showTypingIndicator();
+                chatInput.value = ''; chatInput.disabled = true; chatSendBtn.disabled = true;
+                addMessageToUI(text, true); showTypingIndicator();
 
-                // History update
+                if (!apiKey || apiKey.trim() === "") {
+                    setTimeout(() => {
+                        removeTypingIndicator();
+                        addMessageToUI("⚠️ **Thiếu API Key:** Trợ lý AI đang chạy trên môi trường tĩnh và chưa được cấu hình API Key.\n\n👉 Để chat hoạt động, bạn cần tạo khóa miễn phí tại *aistudio.google.com* và điền vào biến `apiKey` trong mã nguồn.\n\n📞 Tạm thời nếu khẩn cấp, hãy gọi ngay **156**.", false);
+                        chatInput.disabled = false; chatSendBtn.disabled = false;
+                    }, 1000);
+                    return;
+                }
+
                 chatHistory.push({ role: "user", parts: [{ text: text }] });
 
                 try {
-                    const aiResponseText = await callGeminiAPI();
-                    
+                    let aiResponseText = ""; let delay = 1000; let success = false;
+                    for (let i = 0; i < 5; i++) {
+                        try {
+                            const response = await fetch(geminiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: chatHistory, systemInstruction: { parts: [{ text: systemInstruction }] } }) });
+                            if (!response.ok) throw new Error(`HTTP error!`);
+                            const data = await response.json();
+                            aiResponseText = data.candidates[0].content.parts[0].text; success = true; break; 
+                        } catch (e) {
+                            if (i === 4) throw e;
+                            await new Promise(r => setTimeout(r, delay)); delay *= 2;
+                        }
+                    }
                     removeTypingIndicator();
-                    addMessageToUI(aiResponseText, false);
-                    
-                    // Add AI response to history
-                    chatHistory.push({ role: "model", parts: [{ text: aiResponseText }] });
-                    
-                    // Keep history manageable (last 10 messages)
-                    if (chatHistory.length > 10) chatHistory = chatHistory.slice(-10);
+                    if (success) {
+                        addMessageToUI(aiResponseText, false);
+                        chatHistory.push({ role: "model", parts: [{ text: aiResponseText }] });
+                        if (chatHistory.length > 10) chatHistory = chatHistory.slice(-10);
+                    }
                 } catch (error) {
                     removeTypingIndicator();
-                    addMessageToUI("❌ Xin lỗi, hệ thống đang bận. Nếu bạn nghi ngờ bị lừa đảo, hãy LẬP TỨC GỌI NGÂN HÀNG khóa thẻ và gọi 156.", false);
-                    // Pop the user message if failed so they can retry
+                    addMessageToUI("❌ Lỗi kết nối. Vui lòng kiểm tra lại API Key hoặc gọi ngay 156 để được hỗ trợ.", false);
                     chatHistory.pop(); 
                 } finally {
-                    chatInput.disabled = false;
-                    chatSendBtn.disabled = false;
-                    chatInput.focus();
+                    chatInput.disabled = false; chatSendBtn.disabled = false; chatInput.focus();
                 }
             }
 
             chatSendBtn.addEventListener('click', handleSend);
-            chatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') handleSend();
-            });
-
+            chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSend(); });
         });
     </script>
 </body>
